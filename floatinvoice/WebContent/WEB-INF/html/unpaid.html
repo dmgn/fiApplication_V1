@@ -1,9 +1,9 @@
 
   <table ng-controller="UnpaidCtrl" class="table table-striped">
     <tr>
-      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</td>
-      <th><a href="" ng-click="sortField = 'invoicePONo'">Purchase Order #</td>
-      <th><a href="" ng-click="sortField = 'amount'"> Amount</td>
+      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</th>
+      <th><a href="" ng-click="sortField = 'invoicePONo'">Purchase Order #</th>
+      <th><a href="" ng-click="sortField = 'amount'"> Amount</th>
       <th><a href="" ng-click="sortField = 'invoiceNo'">Invoice #</th>
       <th><a href="" ng-click="sortField = 'startDt'">Invoice Date</th>
       <th><a href="" ng-click="sortField = 'endDt'">Due Date</th>
@@ -41,7 +41,7 @@
       <td>{{item.startDt}}</td>
       <td>{{item.endDt}}</td>
       <td ng-if="item.status == '0'">
-      <button type="button" class="btn btn-primary" ng-click=collectNow(item.refId)>Collect Now</button>
+      <button type="button" class="btn btn-primary" ng-click=collectNow(item.refId)>Finance Now</button>
       </td>
     </tr>
   </table>
