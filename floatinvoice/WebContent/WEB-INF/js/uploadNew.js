@@ -7,6 +7,12 @@
                     $scope.fileList = data.list;
                 });
 
+
+            $http.get('/floatinvoice/template/metaData?category=INVOICETEMPLATE')
+                .success(function(metadata){
+                    $scope.templateMetaData = metadata;
+                });
+
             $scope.getUrl = function(file) {
                 return "/floatinvoice/download?acro="+acro+"&refId="+file.refId+"&fileName="+file.fileName+"&type=xlsx";
             }
@@ -25,7 +31,12 @@
             }
            
 
-
+            $scope.downloadNow = function() {
+                console.log("calling downloadNow");
+                var refId = $scope.templateMetaData.refId;
+                var fileName = $scope.templateMetaData.fileName;
+                return "/floatinvoice/downloadTemplate?refId="+refId+"&fileName="+fileName+"&type=xlsx";
+            }
 
 
 
