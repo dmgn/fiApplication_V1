@@ -14,9 +14,15 @@ public interface FileServiceDao {
 	
 	BaseMsg uploadLenderAgreement(UploadMessage msg) throws Exception;
 	
+	BaseMsg uploadInvoiceTemplate(UploadMessage msg) throws Exception;
+	
 	byte [] downloadLenderAgreement(String lenderAcronym, String refId);
 	
 	List<SupportDocDtls> summarySupportDocs(int companyId, int userId); 
 	
 	List<SupportDocDtls> summarySupportDocs(String acronym); 
+	
+	byte[] downloadInvoiceTemplate(String refId);
+	
+	SupportDocDtls invoiceTemplateMetaData(String category);
 }
