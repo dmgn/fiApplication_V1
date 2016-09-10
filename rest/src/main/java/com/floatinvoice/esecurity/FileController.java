@@ -91,12 +91,45 @@ public class FileController {
 	@RequestMapping(value = { "/upload/agreement"}, method = RequestMethod.POST)
     public  ResponseEntity<BaseMsg> uploadFile(@RequestParam(value="acro", required=true) String acro,
     		@RequestParam(value="filename", required=false) String fileName,
-    		@RequestParam(value="category", required=true) String category,
+    		@RequestParam(value="category", required=false) String category,
     		@RequestParam(value="file", required=true) MultipartFile file) throws Exception {    
 		UploadMessage uploadMsg = new UploadMessage(file);
     	uploadMsg.setFileName(file.getOriginalFilename());
     	uploadMsg.setAcronym(acro);
     	return new ResponseEntity<>(fileService.uploadLenderAgreement(uploadMsg), HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = { "/upload/template"}, method = RequestMethod.POST)
+    public  ResponseEntity<BaseMsg> uploadTemplateFile(	@RequestParam(value="filename", required=false) String fileName,
+    		@RequestParam(value="acro", required=true) String acro,
+    		@RequestParam(value="category", required=true) String category,
+    		@RequestParam(value="file", required=true) MultipartFile file) throws Exception {    
+		UploadMessage uploadMsg = new UploadMessage(file);
+    	uploadMsg.setFileName(file.getOriginalFilename());    	
+    	uploadMsg.setCategory(category);
+    	uploadMsg.setAcronym(acro);
+    	return new ResponseEntity<>(fileService.uploadInvoiceTemplate(uploadMsg), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = { "/downloadTemplate"}, method = RequestMethod.GET)
+    public  void downloadInvoiceTemplate(HttpServletResponse response, 
+    		@RequestParam(value="refId", required=true) String refId,
+    		@RequestParam(value="fileName", required=true) String fileName,
+    		@RequestParam(value="type", required=true) String type) throws IOException {
+        ByteMsg byteMsg = fileService.downloadInvoiceTemplateDocs(refId);
+        byte [] bytes = byteMsg.getBytes();
+        response.setContentType(getContentType(type));
+        response.setHeader("Content-Disposition", String.format("attachment;filename=\"%s\"", fileName));
+        ServletOutputStream out = response.getOutputStream();
+        out.write(bytes);
+        out.flush();
+        out.close();
+    }
+	
+	@RequestMapping(value = { "/template/metaData"}, method = RequestMethod.GET)
+	public ResponseEntity<SupportDocDtls> invoiceTemplateMetaData(@RequestParam(value="category", required=true) String category){
+		return new ResponseEntity<SupportDocDtls>( fileService.invoiceTemplateMetaData(category), HttpStatus.OK );
 	}
 	
 	
