@@ -29,7 +29,6 @@ import com.floatinvoice.common.UUIDGenerator;
 import com.floatinvoice.common.UserContext;
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.FileDetails;
-import com.floatinvoice.messages.InvoiceDtlsMsg;
 import com.floatinvoice.messages.UploadMessage;
 
 @Repository
