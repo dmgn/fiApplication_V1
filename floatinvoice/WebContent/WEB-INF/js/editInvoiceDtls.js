@@ -4,6 +4,7 @@ app.controller('EditInvoiceDtlsController', [
   '$http','$scope', '$element', 'input', 'close', 'fiService',
   function($http, $scope, $element, input, close, fiService) {
  
+    $scope.invoiceDtls = input;
  /*$http.get('/floatinvoice/invoice/'+input+'?acro='+fiService.getAcronym())
       .success(function(data){
           $scope.invoices = data.list;
