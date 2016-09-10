@@ -10,12 +10,12 @@
     			});
 
 
-	$scope.displayInvoicePoolDtls = function( poolRefId ){
+	$scope.displayInvoiceDtls = function( invoiceDtls ){
 		  ModalService.showModal({
 	      templateUrl: "html/editInvoiceDtls.html",
 	      controller: "EditInvoiceDtlsController",
 	      inputs: {
-	        input:poolRefId
+	        input:invoiceDtls
 	      }
 		  }).then(function(modal) {
 		   modal.element.modal();
