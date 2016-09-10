@@ -52,4 +52,21 @@ public class FileServiceImpl implements FileService {
 		return new ListMsg<>(fileServiceDao.summarySupportDocs(acronym));
 	}
 
+	@Override
+	public BaseMsg uploadInvoiceTemplate(UploadMessage msg) throws Exception {
+		return fileServiceDao.uploadInvoiceTemplate(msg);
+	}
+
+	@Override
+	public ByteMsg downloadInvoiceTemplateDocs(String refId) {
+		byte [] fileBytes =  fileServiceDao.downloadInvoiceTemplate(refId);
+		ByteMsg resultBytes = new ByteMsg(fileBytes);
+		return resultBytes;
+	}
+
+	@Override
+	public SupportDocDtls invoiceTemplateMetaData(String category) {
+		return fileServiceDao.invoiceTemplateMetaData(category);
+	}
+
 }
