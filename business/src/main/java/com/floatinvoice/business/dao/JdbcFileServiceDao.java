@@ -20,7 +20,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
 
+import com.floatinvoice.common.DocCategoryEnum;
 import com.floatinvoice.common.UUIDGenerator;
+import com.floatinvoice.common.UserContext;
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.SupportDocDtls;
 import com.floatinvoice.messages.UploadMessage;
@@ -32,7 +34,9 @@ public class JdbcFileServiceDao implements FileServiceDao {
 	private LobHandler lobHandler;
 	final static String sql = "INSERT INTO LENDER_AGREEMENT_DOC (FILE_NAME, AGREEMENT, INSERT_DT, UPDATE_DT, COMPANY_ID, REF_ID, REQUEST_ID, SOURCE_APP) "
 			+ "values (?, ?, ?, ?, ?, ?, ?, ?)";
-	
+	final static String invoiceTemplateUploadSql =
+			"INSERT INTO TEMPLATE_DOCS (FILE_NAME, FILE_BYTES, INSERT_DT, COMPANY_ID, USER_ID, REF_ID, REQUEST_ID, SOURCE_APP, CATEGORY) "
+			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public JdbcFileServiceDao(DataSource dataSource, OrgReadDao orgReadDao, LobHandler lobHandler){
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		this.orgReadDao = orgReadDao;
@@ -145,4 +149,74 @@ public class JdbcFileServiceDao implements FileServiceDao {
 		List<SupportDocDtls> list = jdbcTemplate.query(sql, paramMap, new SupportDocRowMapper());
 		return list;
 	}
+	@Override
+	public BaseMsg uploadInvoiceTemplate(final UploadMessage msg) throws Exception {
+		Map<String, Object> orgInfo = orgReadDao.findOrgAndUserId(UserContext.getUserName());
+		final int orgId = (int) orgInfo.get("COMPANY_ID");
+		final int userId = (int) orgInfo.get("USER_ID");
+		
+		final byte [] bytes = msg.getFile().getBytes();
+		final LobCreator lobCreator = lobHandler.getLobCreator();
+		jdbcTemplate.getJdbcOperations().update( new PreparedStatementCreator(){
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn)
+					throws SQLException {
+				final PreparedStatement ps = conn.prepareStatement(invoiceTemplateUploadSql);
+				try {
+					ps.setString(1, msg.getFileName());
+					lobCreator.setBlobAsBytes(ps, 2, bytes);
+					ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+					ps.setInt(4, orgId);
+					ps.setInt(5, userId);
+					ps.setString(6, UUIDGenerator.newRefId());
+					ps.setString(7, UUID.randomUUID().toString());
+					ps.setInt(8, 0);
+					ps.setInt(9, DocCategoryEnum.valueOf(msg.getCategory()).getCode());
+				} catch (SQLException e) {
+					throw e;
+				}
+				return ps;
+			}
+		});
+		lobCreator.close();
+		BaseMsg response = new BaseMsg();	
+		response.addInfoMsg("Invoice template uploaded successfully", HttpStatus.OK.value());
+		return response;
+	}
+	
+	@Override
+	public byte[] downloadInvoiceTemplate(String refId) {		
+		final String sql = "SELECT FILE_BYTES FROM TEMPLATE_DOCS WHERE REF_ID = :refId";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("refId", refId);
+		Map<String, Object> result = jdbcTemplate.queryForMap(sql, paramMap);
+		return (byte[]) result.get("FILE_BYTES");
+		
+	}
+
+	@Override
+	public SupportDocDtls invoiceTemplateMetaData(String category) {
+		int categoryCode = DocCategoryEnum.valueOf(category).getCode();
+		final String sql = "SELECT * FROM TEMPLATE_DOCS WHERE CATEGORY = :categoryCode";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("categoryCode", categoryCode);
+		SupportDocDtls row = jdbcTemplate.queryForObject(sql, paramMap, new TemplateDocRowMapper());
+		return row;
+	}
+	
+	private class TemplateDocRowMapper implements RowMapper<SupportDocDtls>{
+
+		@Override
+		public SupportDocDtls mapRow(ResultSet rs, int arg1)
+				throws SQLException {
+			SupportDocDtls rec = new SupportDocDtls();
+			rec.setFileName(rs.getString("FILE_NAME"));
+			rec.setRefId(rs.getString("REF_ID"));
+			rec.setTimest(rs.getDate("INSERT_DT"));
+			rec.setCateg(DocCategoryEnum.get(rs.getInt("CATEGORY")).getName());
+			return rec;
+		}
+		
+	}
+	
 }
