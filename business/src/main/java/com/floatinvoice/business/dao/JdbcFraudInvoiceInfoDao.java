@@ -11,13 +11,11 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.floatinvoice.messages.FraudInvoiceDtls;
 import com.floatinvoice.messages.ListMsg;
-import com.floatinvoice.messages.LoanDtlsMsg;
 
 public class JdbcFraudInvoiceInfoDao implements FraudInvoiceInfoDao {
 
