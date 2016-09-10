@@ -20,7 +20,7 @@ app.controller('StagedEnquiryModalViewController', [
     };
 
   $scope.getUrl = function(file) {
-      return '/floatinvoice/downloadSupportDocs?refId='+file.refId+'&fileName='+file.fileName+'&acro='+acro+'&type=pdf';
+      return '/floatinvoice/downloadSupportDocs?refId='+file.refId+'&fileName='+file.fileName+'&type=pdf';
       //  return "/floatinvoice/download?acro="+acro+"&refId="+file.refId+"&fileName="+file.fileName+"&type=xlsx";
     }
 
