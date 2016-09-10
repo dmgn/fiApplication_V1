@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -104,6 +105,13 @@ public class JdbcBankInfoDao implements BankInfoDao {
 		
 		Map<String, Object> invoiceInfoMap =invoiceInfoDao.findInvoicePoolByRefId(loanDtlsMsg.getPoolRefId());
 		final int poolId = (int) invoiceInfoMap.get("POOL_ID");
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		cal.add(Calendar.DAY_OF_YEAR, 7);
+		
+		Calendar calCloseDt = Calendar.getInstance();
+		calCloseDt.setTimeInMillis(cal.getTimeInMillis());
+		calCloseDt.add(Calendar.MONTH, loanDtlsMsg.getLoanPeriod());
 		final String sql = "INSERT INTO LOAN_INFO(LOAN_REF_ID, LOAN_STATUS, LOAN_AMT, LOAN_DISPATCH_DT, LOAN_CLOSE_DT, SME_ORG_ID, FINANCIER_ORG_ID, "
 				+ " CREATE_DT, CREATED_BY, INVOICE_POOL_ID )"
 				+ " VALUES (:loanRefId, :loanStatus, :loanAmt, :loanDispatchDt, :loanCloseDt, :smeOrgId, :financierOrgId, :createDt, :createdBy, :poolId)";
@@ -111,8 +119,8 @@ public class JdbcBankInfoDao implements BankInfoDao {
 		params.addValue("loanRefId", UUIDGenerator.newRefId());
 		params.addValue("loanStatus", LoanStatus.ACTIVE.getCode());
 		params.addValue("loanAmt", loanDtlsMsg.getLoanAmt());
-		params.addValue("loanDispatchDt", loanDtlsMsg.getLoanDispatchDt());
-		params.addValue("loanCloseDt", loanDtlsMsg.getLoanCloseDt());
+		params.addValue("loanDispatchDt", cal.getTime() );
+		params.addValue("loanCloseDt", calCloseDt.getTime());
 		params.addValue("smeOrgId", smeOrgId);
 		params.addValue("financierOrgId", financierOrgId);
 		params.addValue("createdBy", UserContext.getUserName());
