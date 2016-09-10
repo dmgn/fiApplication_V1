@@ -42,6 +42,7 @@
   <script src="js/payment.js"></script>
   <script src="js/funded.js"></script>
   <script src="js/paid.js"></script>
+  <script src="js/offers.js"></script>
   <script src="js/pending.js"></script>
   <script src="js/unpaid.js"></script>
   <script src="js/upload.js"></script>
@@ -70,7 +71,7 @@
       function ($scope, $location) {
      $scope.vtabs = [
           { link : '#/homePg', label : 'Home' },
-          { link : '#/payments', label : 'Payments' },
+          { link : '#/loans', label : 'Loans' },
           { link : '#/reports', label : 'Reports' }/*,
           { link : '#/profile', label : 'Profile' },*/
           
