@@ -117,6 +117,11 @@ public class InvoiceController {
         return new ResponseEntity<ListMsg<InvoiceDtlsMsg>>(invoiceService.fetchAcceptedBidsBySME(acro), HttpStatus.OK);
     }
     
+    @RequestMapping(value = { "/viewOffers"}, method = RequestMethod.GET)
+    public  ResponseEntity<ListMsg<InvoiceDtlsMsg>> viewAcceptedOffers(@RequestParam(value="acro", required=true) String acro) throws Exception {
+        return new ResponseEntity<ListMsg<InvoiceDtlsMsg>>(invoiceService.viewAcceptedOffers(acro), HttpStatus.OK);
+    }
+    
     @RequestMapping(value = { "/pending/approval"}, method = RequestMethod.GET)
     public  ResponseEntity<ListMsg<InvoiceDtlsMsg>> viewPendingInvoicesForApproval(@RequestParam(value="acro", required=true) String buyerOrgAcro) {
         return new ResponseEntity<ListMsg<InvoiceDtlsMsg>>(invoiceService.fetchPendingInvoicesForApproval(buyerOrgAcro), HttpStatus.OK);
