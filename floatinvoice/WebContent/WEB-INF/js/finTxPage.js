@@ -3,10 +3,10 @@
       function ($scope, $location) {
 
       $scope.tabs = [
-          { link : '#/t1/list', label : 'Pending' },
-          { link : '#/t1/approve', label: 'Approval Queue'},
-          { link : '#/t1/funded', label : 'Funded' },
-          { link : '#/t1/repaid', label : 'RePaid' }
+          { link : '#/t1/list', label : 'Bid' },
+          { link : '#/t1/approve', label: 'Approve'},
+          { link : '#/t1/funded', label : 'Fund' },
+          { link : '#/t1/repaid', label : 'Repaid' }
         ];  
       var index = -1;
       var tabList =  $scope.tabs;
