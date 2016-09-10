@@ -55,5 +55,8 @@ public interface InvoiceInfoDao {
 	int managePendingInvoices(String invoiceRefId, int action);
 	
 	ListMsg<InvoiceDtlsMsg> viewSMERejectedInvoices(int smeOrgId);
+	
+	ListMsg<InvoiceDtlsMsg> viewAcceptedOffers(int smeOrgId) throws Exception;
+
 }
 
