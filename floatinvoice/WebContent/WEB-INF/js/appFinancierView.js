@@ -42,7 +42,7 @@
 
       $routeSegmentProvider
       .segment('t1', {
-        templateUrl: '/floatinvoice/html/financierHomePg.html',
+        templateUrl: '/floatinvoice/html/financierTxPg.html',
         controller: 'FinJustifiedTabsCtrl'
       });
 
