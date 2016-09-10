@@ -57,7 +57,8 @@ angular.module('finfloatInvoiceListApp')
         $scope.showId = true;
         $scope.poolRefId = item.poolRefId;
         $scope.smeAcro = item.sme;
-        console.log("poolRefId: " + item.poolRefId + " navID: "+ navID + ", " + $scope.showId);
+        $scope.loanPeriod = item.loanPeriod;
+        console.log(item);        
         $mdSidenav(navID)
           .toggle()
           .then(function () {
@@ -113,13 +114,16 @@ angular.module('finfloatInvoiceListApp')
     };
 
     $scope.submitForm = function() {
-      // check to make sure the form is completely valid
+       // check to make sure the form is completely valid
+
       if ($scope.userForm.$valid) {
+        console.log("valid");
+          $scope.user = {};
           $scope.user.financierAcro = financierAcro;
           $scope.user.smeAcro = $scope.smeAcro;
           $scope.user.poolRefId = $scope.poolRefId;
           $scope.user.loanAmt = $scope.loanAmtOffer;
-          console.log($scope.user);
+          $scope.user.loanPeriod = $scope.loanPeriod;
           $http({
               method:'POST',
               url:'/floatinvoice/bank/approveLoan',
