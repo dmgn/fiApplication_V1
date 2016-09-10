@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.FileDetails;
-import com.floatinvoice.messages.ListMsg;
 import com.floatinvoice.messages.UploadMessage;
 
 public interface InvoiceFileUploadDao {
