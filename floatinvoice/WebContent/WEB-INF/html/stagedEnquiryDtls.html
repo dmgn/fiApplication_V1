@@ -38,7 +38,7 @@
                 </tr>                
                 <tr ng-repeat="file in enquiry.supportDocs | filter:search | orderBy:sortField">
                     <!-- <td><a href ng-click="openFile(file)">{{file.fileName}}</a></td> -->
-                    <td><a ng-href='{{getUrl(file)}}'>{{file.fileName}}</a></td>
+                    <td><a ng-href="{{getUrl(file)}}">{{file.fileName}}</a></td>
                     <td>{{file.timest}}</td>
                     <td>{{file.categ}}</td>
                     <td>{{file.user}}</td>
