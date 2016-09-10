@@ -3,15 +3,15 @@
   <table  class="table table-striped">
     <tr>
       <th><a href="" ng-click="sortField = 'invoicePoolNo'">Invoice Pool #</th>
-      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</td>
-      <th><a href="" ng-click="sortField = 'totPoolAmt'">Total Pool Amount</td>
+      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</th>
+      <th><a href="" ng-click="sortField = 'totPoolAmt'">Total Pool Amount</th>
       <th><a href="" ng-click="sortField = 'interestRate'">Interest Rate</th>
       <th><a href="" ng-click="sortField = 'financier'">Financier</th>
       <th/>    
     </tr>
     <tr>
         <th>
-            <input type="text" ng-model="search.invoicePoolNo" placeholder="search for buyer" class="input-sm form-control" />
+            <input type="text" ng-model="search.invoicePoolNo" placeholder="search for invoice pool" class="input-sm form-control" />
         </th>
         <th>
             <input type="text" ng-model="search.smeCtpy" placeholder="search for buyer" class="input-sm form-control"/>
@@ -50,12 +50,12 @@
  -->   
 <section layout-lg="row" flex="" ng-controller="FundedRightCtrl">
         <div>
-          <button type="button" class="btn btn-primary" ng-click="toggleRight(item.refId, 'right')" ng-hide="isOpenRight()">Get Paid</button>
+          <button type="button" class="btn btn-primary" ng-click="toggleRight(item.refId, 'right')">Accept Offer</button>
         </div>
         <div flex=""></div>
   <md-sidenav class="md-sidenav-right md-whiteframe-z4" md-component-id="right" ng-model="showId">
         <md-toolbar class="md-theme-light">
-          <h1 class="md-toolbar-tools">Confirm the payment...</h1>
+          <h1 class="md-toolbar-tools">Confirm the loan terms...</h1>
         </md-toolbar>
         <md-content  layout-padding="">
         <br/>
