@@ -77,6 +77,19 @@ public class InvoiceControllerTest {
 	
 	
 	@Test
+	public void testInvoiceTemplateFiles() throws Exception{
+		Resource resource = new ClassPathResource("InvoiceTemplate.xlsx");
+		MockMultipartFile file = new MockMultipartFile("file", "InvoiceTemplate.xlsx", "", resource.getInputStream());
+		
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+		RequestBuilder reqBuilder = MockMvcRequestBuilders.fileUpload("http://54.210.238.169:8080/floatinvoice/upload/template?category=INVOICETEMPLATE&acro=FLIADMIN&filename=InvoiceTemplate.xlsx")
+				.file(file).header("remote-user", "admin@floatinvoice.com");
+		
+		mockMvc.perform(reqBuilder).andDo(print());		
+	}
+	
+	
+	@Test
 	public void testUploadFiles() throws Exception{
 		Resource resource = new ClassPathResource("Sandbox.xlsx");
 		MockMultipartFile file = new MockMultipartFile("file", "Sandbox.xlsx", "", resource.getInputStream());
@@ -86,6 +99,14 @@ public class InvoiceControllerTest {
 				.file(file).header("remote-user", "abc.xyz@gmail.com");
 		
 		mockMvc.perform(reqBuilder).andDo(print());		
+	}
+	
+
+	@Test
+	public void testInvoiceTemplateMetaData() throws Exception{
+		RequestBuilder req = get("/template/metaData?category=INVOICETEMPLATE").contentType(MediaType.APPLICATION_JSON)
+				.header("remote-user", "admin@floatinvoice.com");
+		MvcResult res = mockMvc.perform(req).andDo(print()).andReturn();	
 	}
 	
 	@Test
@@ -233,5 +254,18 @@ public class InvoiceControllerTest {
 				.header("remote-user", "askforgautam@gmail.com")
 				.content(objMapper.writeValueAsString(msg));
 		MvcResult res = mockMvc.perform(req).andDo(print()).andReturn();
+	}
+	
+	
+	@Test
+	public void testLenderAgreementTemplate() throws Exception{
+		Resource resource = new ClassPathResource("application_form.docx");
+		MockMultipartFile file = new MockMultipartFile("file", "application_form.docx", "", resource.getInputStream());
+		
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+		RequestBuilder reqBuilder = MockMvcRequestBuilders.fileUpload("/upload/agreement?acro=ICICIBNK&filename=application_form.docx")
+				.file(file).header("remote-user", "bank@icici.com");
+		
+		mockMvc.perform(reqBuilder).andDo(print());		
 	}
 }
