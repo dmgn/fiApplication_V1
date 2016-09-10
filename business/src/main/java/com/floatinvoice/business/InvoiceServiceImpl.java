@@ -184,6 +184,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 		Integer orgId = (Integer) buyerOrg.get("COMPANY_ID");
 		return new ListMsg<>(invoiceFileUploadDao.viewAllInvoiceFiles(orgId));
 	}
+
+	@Override
+	public ListMsg<InvoiceDtlsMsg> viewAcceptedOffers(String smeOrgAcro)
+			throws Exception {
+		Map<String, Object> smeOrg = orgReadDao.findOrgId(smeOrgAcro);
+		Integer smeOrgId = (Integer) smeOrg.get("COMPANY_ID");
+		return invoiceInfoReadDao.viewAcceptedOffers(smeOrgId);
+	}
 	
 	
 }
