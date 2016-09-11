@@ -117,7 +117,7 @@ public class JdbcBankInfoDao implements BankInfoDao {
 				+ " VALUES (:loanRefId, :loanStatus, :loanAmt, :loanDispatchDt, :loanCloseDt, :smeOrgId, :financierOrgId, :createDt, :createdBy, :poolId)";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("loanRefId", UUIDGenerator.newRefId());
-		params.addValue("loanStatus", LoanStatus.ACTIVE.getCode());
+		params.addValue("loanStatus", LoanStatus.SANCTIONED.getCode());
 		params.addValue("loanAmt", loanDtlsMsg.getLoanAmt());
 		params.addValue("loanDispatchDt", cal.getTime() );
 		params.addValue("loanCloseDt", calCloseDt.getTime());
@@ -138,7 +138,7 @@ public class JdbcBankInfoDao implements BankInfoDao {
 		String loanRefId = installment.getLoanRefId();
 		Map<String, Object> smeMap = orgReadDao.findOrgId(installment.getSmeAcro());
 		int smeOrgId = (Integer) smeMap.get("company_id");
-		final String sqlStr = "SELECT LOAN_ID, LOAN_AMT FROM LOAN_INFO WHERE LOAN_REF_ID = :loanRefId and SME_ORG_ID = :smeOrgId";
+		final String sqlStr = "SELECT LOAN_ID, LOAN_AMT FROM LOAN_INFO WHERE LOAN_REF_ID = :loanRefId and SME_ORG_ID = :smeOrgId ";
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loanRefId", loanRefId);
 		paramMap.addValue("smeOrgId", smeOrgId);
@@ -179,9 +179,10 @@ public class JdbcBankInfoDao implements BankInfoDao {
 				+ "  ON LI.SME_ORG_ID = SME.COMPANY_ID "
 				+ " JOIN ORGANIZATION_INFO FINANCIER "
 				+ "  ON LI.FINANCIER_ORG_ID = FINANCIER.COMPANY_ID "
-				+ " WHERE LI.SME_ORG_ID = :smeOrgId";
+				+ " WHERE LI.SME_ORG_ID = :smeOrgId AND LI.LOAN_STATUS = :status";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("smeOrgId", orgId);
+		params.addValue("status", LoanStatus.ACTIVE.getCode());
 		return jdbcTemplate.query(allInstallmentSql, new LoanInstallmentRowMapper());
 	}
 	
@@ -200,7 +201,7 @@ public class JdbcBankInfoDao implements BankInfoDao {
 				result.getEmis().addAll(installments);
 				result.setLoanRefId(rs.getString("LOAN_REF_ID"));
 				result.setLoanAmt(rs.getDouble("LOAN_AMT"));
-				result.setLoanStatus(LoanStatus.fromCode(rs.getInt("LOAN_STATUS")).getText());
+				result.setLoanStatus(LoanStatus.get(rs.getInt("LOAN_STATUS")).getText());
 				result.setFinancierAcro(rs.getString("FINANCIER"));
 				result.setSmeAcro(rs.getString("SME"));
 			}
@@ -228,9 +229,10 @@ public class JdbcBankInfoDao implements BankInfoDao {
 				+ " ON IFC.INVOICE_POOL_ID = LI.INVOICE_POOL_ID AND IFC.FINANCIER_ID = LI.FINANCIER_ORG_ID  "
 				+ " LEFT JOIN LOAN_INSTALLMENT LOAN_INST "
 				+ " ON LI.LOAN_ID = LOAN_INST.LOAN_ID "
-				+ " WHERE LI.SME_ORG_ID = :smeOrgId";
+				+ " WHERE LI.SME_ORG_ID = :smeOrgId AND LI.LOAN_STATUS = :status";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("smeOrgId", smeOrgId);
+		params.addValue("status", LoanStatus.ACTIVE.getCode());
 		return jdbcTemplate.query(sql, params, new ResultSetExtractor<List<LoanDtlsMsg>>() {
 
 			@Override
@@ -276,6 +278,57 @@ public class JdbcBankInfoDao implements BankInfoDao {
 		});
 	}
 
+	@Override
+	public List<LoanDtlsMsg> viewAllSanctionedLoansByFinancier(int orgId) {
+		final String sql = " SELECT LI.LOAN_AGREEMENT, LI.LOAN_ID, LI.LOAN_REF_ID, LI.LOAN_STATUS, LI.LOAN_AMT, LI.LOAN_DISPATCH_DT, SME.ACRONYM, IP.POOL_REF_ID, IP.POOL_ID, "
+				+ " LI.LOAN_CLOSE_DT FROM LOAN_INFO LI "
+				+ " JOIN ORGANIZATION_INFO SME "
+				+ " ON SME.COMPANY_ID = LI.SME_ORG_ID "
+				+ " JOIN INVOICE_POOL IP "
+				+ " ON IP.POOL_ID = LI.INVOICE_POOL_ID "
+				+ " WHERE LI.FINANCIER_ORG_ID = :financierOrgId  AND LI.LOAN_STATUS = :status order by LI.SME_ORG_ID ";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("financierOrgId", orgId);
+		params.addValue("status", LoanStatus.SANCTIONED.getCode());
+		List<LoanDtlsMsg> lst = jdbcTemplate.query(sql, params, new FinancierLoanListViewRowMapper());
+		return lst;
+	}
+
+	private class FinancierLoanListViewRowMapper implements RowMapper<LoanDtlsMsg>{
+
+		@Override
+		public LoanDtlsMsg mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+			LoanDtlsMsg result = new LoanDtlsMsg();
+			result.setLoanId(rs.getInt("LOAN_ID"));
+			result.setRefId(rs.getString("LOAN_REF_ID"));
+			result.setLoanAmt(rs.getDouble("LOAN_AMT"));
+			result.setLoanDispatchDt(rs.getDate("LOAN_DISPATCH_DT"));
+			result.setLoanCloseDt(rs.getDate("LOAN_CLOSE_DT"));
+			result.setPoolId(rs.getString("POOL_ID"));
+			result.setLoanStatus(LoanStatus.get((rs.getInt("LOAN_STATUS"))).getText());
+			result.setPoolRefId(rs.getString("POOL_REF_ID"));
+			result.setSmeAcro(rs.getString("ACRONYM"));
+			result.setAgreementReady(rs.getBlob("LOAN_AGREEMENT") == null ? false : true);			
+			return result;
+		}
+
+	}
+
+	@Override
+	public BaseMsg disburseLoan(String loanRefId) {
+		BaseMsg msg = null;
+		final String sql = "UPDATE LOAN_INFO LI SET LI.LOAN_STATUS= :status WHERE LI.LOAN_REF_ID = :loanRefId";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("loanRefId", loanRefId);
+		params.addValue("status", LoanStatus.ACTIVE.getCode());
+		int row = jdbcTemplate.update(sql, params);
+		if (row == 1){
+			msg = new BaseMsg();
+		}
+		return msg;
+	}
+	
 	/*private class LoanDtlsRowMapper implements RowMapper<LoanDtlsMsg>{
 		Map<String, LoanDtlsMsg> resultMap = new LinkedHashMap<>();
 		LoanDtlsMsg row = null;
