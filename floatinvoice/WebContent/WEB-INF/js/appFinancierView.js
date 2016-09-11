@@ -14,7 +14,8 @@
         when('/findashboard', 't0').
         when('/finTxPg','t1').
         when('/t1/list','t1.list').
-        when('/t1/approve','t1.approve').        
+        when('/t1/approve','t1.approve').  
+        when('/t1/sanctioned','t1.sanctioned').       
         when('/t1/funded','t1.funded').        
         when('/t1/repaid','t1.repaid').  
         when('/finResearch', 't2').
@@ -58,6 +59,13 @@
       .segment('approve', {
         templateUrl:'/floatinvoice/html/finApprovalQueue.html',
         controller:'FinApprovalViewCtrl'
+    });
+
+    $routeSegmentProvider
+      .within('t1')
+      .segment('sanctioned', {
+        templateUrl:'/floatinvoice/html/finSanctionedLoan.html',
+        controller:'FinSanctionedLoanCtrl'
     });
 
     $routeSegmentProvider
