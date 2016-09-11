@@ -58,6 +58,17 @@ public class LoanDtlsMsg extends BaseMsg {
 	@XmlElement(name="emis")
 	private List<LoanInstallmentsDtlsMsg> emis = new LinkedList<>();
 
+	@XmlElement(name="isAgreementReady")
+	private boolean isAgreementReady;
+	
+	public boolean isAgreementReady() {
+		return isAgreementReady;
+	}
+
+	public void setAgreementReady(boolean isAgreementReady) {
+		this.isAgreementReady = isAgreementReady;
+	}
+
 	public int getLoanId() {
 		return loanId;
 	}
