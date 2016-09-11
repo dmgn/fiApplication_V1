@@ -1035,9 +1035,10 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 				+ " ON SME.COMPANY_ID = LI.SME_ORG_ID "
 				+ " JOIN INVOICE_POOL IP "
 				+ " ON IP.POOL_ID = LI.INVOICE_POOL_ID "
-				+ " WHERE LI.FINANCIER_ORG_ID = :financierOrgId order by LI.SME_ORG_ID ";
+				+ " WHERE LI.FINANCIER_ORG_ID = :financierOrgId  AND LI.LOAN_STATUS = :status order by LI.SME_ORG_ID ";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("financierOrgId", orgId);
+		params.addValue("status", LoanStatus.ACTIVE.getCode());
 		List<LoanDtlsMsg> lst = jdbcTemplate.query(sql, params, new FinancierLoanListViewRowMapper());
 		return new ListMsg<>(lst);
 	} 
@@ -1054,7 +1055,7 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 			result.setLoanDispatchDt(rs.getDate("LOAN_DISPATCH_DT"));
 			result.setLoanCloseDt(rs.getDate("LOAN_CLOSE_DT"));
 			result.setPoolId(rs.getString("POOL_ID"));
-			result.setLoanStatus(LoanStatus.fromCode(rs.getInt("LOAN_STATUS")).getText());
+			result.setLoanStatus(LoanStatus.get(rs.getInt("LOAN_STATUS")).getText());
 			result.setPoolRefId(rs.getString("POOL_REF_ID"));
 			result.setSmeAcro(rs.getString("ACRONYM"));
 			return result;
