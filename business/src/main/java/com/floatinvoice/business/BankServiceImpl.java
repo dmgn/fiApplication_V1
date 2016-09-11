@@ -84,4 +84,16 @@ public class BankServiceImpl implements BankService {
 		}
 		return new ListMsg<>(lst);
 	}
+
+	@Override
+	public ListMsg<LoanDtlsMsg> viewSanctionedLoansByFinancier(String acronym) {
+		Map<String, Object> map = orgReadDao.findOrgId(acronym);
+		int orgId = (Integer) map.get("company_id");
+		return new ListMsg<>(bankInfoDao.viewAllSanctionedLoansByFinancier(orgId));
+	}
+
+	@Override
+	public BaseMsg disburseLoan(String loanRefId) {
+		return bankInfoDao.disburseLoan(loanRefId);
+	}
 }
