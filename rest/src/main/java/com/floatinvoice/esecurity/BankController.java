@@ -43,15 +43,28 @@ public class BankController {
         return new ResponseEntity<BaseMsg>(bankService.approveLoan(loanDetails), HttpStatus.OK);
     }
     
+    @RequestMapping(value = { "/disburseLoan"}, method = RequestMethod.PUT)
+    public  ResponseEntity<BaseMsg> disburseLoan(@RequestParam(value="loanRefId", required=true) String loanRefId) throws Exception {
+        return new ResponseEntity<BaseMsg>(bankService.disburseLoan(loanRefId), HttpStatus.OK);
+    }
+    
+    
     @RequestMapping(value = { "/payLoan"}, method = RequestMethod.POST)
     public  ResponseEntity<BaseMsg> payLoanInstallment(@RequestBody LoanInstallmentsDtlsMsg installment) throws Exception {
         return new ResponseEntity<BaseMsg>(bankService.payLoanInstallment(installment), HttpStatus.OK);
     }
     
+    @RequestMapping(value = { "/sanctionedLoans"}, method = RequestMethod.GET)
+    public  ResponseEntity<ListMsg<LoanDtlsMsg>> viewSanctionedLoans(@RequestParam(value="acro", required=true) String acro) {
+        return new ResponseEntity<ListMsg<LoanDtlsMsg>>(bankService.viewSanctionedLoansByFinancier(acro), HttpStatus.OK);
+    } 
+    
     @RequestMapping(value = { "/viewAllLoans"}, method = RequestMethod.GET)
     public  ResponseEntity<ListMsg<LoanDtlsMsg>> viewAllLoans(@RequestParam(value="acro", required=true) String acro) {
         return new ResponseEntity<ListMsg<LoanDtlsMsg>>(invoiceService.viewFundedInvoicesByFinancier(acro) , HttpStatus.OK);
     }
+    
+    
     
     @RequestMapping(value = { "/viewActiveLoans"}, method = RequestMethod.GET)
     public  ResponseEntity<ListMsg<LoanDtlsMsg>> viewActiveLoans(@RequestParam(value="acro", required=true) String smeAcronym) {
