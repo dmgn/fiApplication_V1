@@ -14,8 +14,11 @@ public interface BankService {
 	
 	BaseMsg approveLoan(LoanDtlsMsg loanDtlsMsg);
 	
+	BaseMsg disburseLoan(String loanRefId);
+
 	BaseMsg payLoanInstallment(LoanInstallmentsDtlsMsg installment);
 	
 	ListMsg<LoanDtlsMsg> viewActiveLoans( String smeAcronym );
 
+	ListMsg<LoanDtlsMsg> viewSanctionedLoansByFinancier( String acronym );
 }
