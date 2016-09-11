@@ -35,6 +35,8 @@ public interface InvoiceService {
 	
 	ListMsg<LoanDtlsMsg> viewFundedInvoicesByFinancier( String acronym );
 	
+	
+
 	ListMsg<InvoiceDtlsMsg> fetchPendingInvoicesForApproval( String buyerOrgAcro);
 	
 	BaseMsg managePendingInvoices(String invoiceRefId, int action);
