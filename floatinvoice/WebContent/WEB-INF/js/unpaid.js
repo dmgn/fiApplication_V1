@@ -23,7 +23,8 @@
 					var data = JSON.stringify({
 						refId : $scope.refId            
 					});
-					$http.post('/floatinvoice/invoice/credit', data).success($scope.refresh($scope.refId));
+					$http.post('/floatinvoice/invoice/credit', data).success(function () {$scope.refresh($scope.refId)});
+					
 				};
 
     			});
