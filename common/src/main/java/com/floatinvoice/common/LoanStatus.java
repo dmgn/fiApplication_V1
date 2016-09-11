@@ -1,8 +1,13 @@
 package com.floatinvoice.common;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum LoanStatus {
 
-	DEFAULT(0, "DEFAULT"),
+	DEFAULT(-1, "DEFAULT"),
+	SANCTIONED(0, "SANCTIONED"),
 	ACTIVE(1, "ACTIVE"),
 	PAID(2, "PAID");
 	
@@ -30,15 +35,18 @@ public enum LoanStatus {
 		this.text = text;
 	}
 	
-	 public static LoanStatus fromCode(int x) {
-	      switch(x) {
-	      	case 0: 
-	    	  return DEFAULT;
-	        case 1:
-	            return ACTIVE;
-	        case 2:
-	            return PAID;
-	      }
-	      return null;
+	
+	private static final Map<Integer,LoanStatus> lookup = new HashMap<>();
+
+	static {
+	     for(LoanStatus s : EnumSet.allOf(LoanStatus.class))
+	          lookup.put(s.getCode(), s);
 	}
+	
+	public static LoanStatus get(int code) { 
+	      return lookup.get(code); 
+	}
+	
+	
+
 }
