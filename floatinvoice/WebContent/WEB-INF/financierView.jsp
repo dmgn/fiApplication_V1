@@ -44,6 +44,7 @@
   <script src="js/finInvoiceListView.js"></script>
   <script src="js/finApprovalQueueView.js"></script>
   <script src="js/finFundedListView.js" ></script>
+  <script src="js/finSanctionedLoan.js" ></script>
   <script src="js/finSuppDocView.js" ></script>
   <script src="js/finInvoicePoolDtlsModalCtrl.js"></script>
 
