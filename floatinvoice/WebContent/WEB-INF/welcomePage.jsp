@@ -51,7 +51,7 @@
   <script src="js/homePage.js"></script>
   <script src="js/profile.js"></script>
   <script src="js/uploadNew.js"></script>
-  <script src="js/supportingDoc.js"></script>
+  <!-- script src="js/supportingDoc.js"></script -->
   <script src="js/appAdminView.js"></script>
   <script src="js/appNbfcView.js"></script>
   <script src="js/editInvoiceDtls.js"></script>
