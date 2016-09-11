@@ -5,6 +5,7 @@
       $scope.tabs = [
           { link : '#/t1/list', label : 'Bid' },
           { link : '#/t1/approve', label: 'Approve'},
+          { link : '#/t1/sanctioned', label: 'Sanctioned'},
           { link : '#/t1/funded', label : 'Fund' },
           { link : '#/t1/repaid', label : 'Repaid' }
         ];  
