@@ -25,4 +25,7 @@ public interface FileService {
 	ListMsg<SupportDocDtls> summarySupportDocs(String acronym); 
 	
 	SupportDocDtls invoiceTemplateMetaData(String category);
+	
+	ByteMsg viewLoanAgreement(String loanRefId);
+
 }
