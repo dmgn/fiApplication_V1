@@ -7,6 +7,7 @@ public class ByteMsg extends BaseMsg {
 	 */
 	private static final long serialVersionUID = 1L;
 	private byte [] bytes;
+	private String fileName;
 	
 	public ByteMsg(){
 		
@@ -22,6 +23,14 @@ public class ByteMsg extends BaseMsg {
 
 	public void setBytes(byte[] bytes) {
 		System.arraycopy(bytes, 0, this.bytes = new byte [bytes.length], 0, bytes.length);
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	
 	
