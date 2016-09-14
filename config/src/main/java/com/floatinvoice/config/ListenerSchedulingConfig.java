@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import com.floatinvoice.business.listeners.FileProcessor;
 import com.floatinvoice.business.listeners.InvoicePoolNotifier;
 import com.floatinvoice.business.listeners.InvoicePoolProcessor;
+import com.floatinvoice.business.listeners.LoanAgreementProcessor;
 import com.floatinvoice.business.listeners.ThirdPartyEmailNotifier;
+import com.floatinvoice.messages.LoanAgreementTemplateDtls;
 
 @Configuration
 @EnableScheduling
@@ -38,5 +40,10 @@ public class ListenerSchedulingConfig {
 	@Bean
 	public ThirdPartyEmailNotifier thirdPartyNotifier(){
 		return new ThirdPartyEmailNotifier(readServicesConfig.thirdPartyNotificationDao(), businessServiceConfig.emailService());
+	}
+	
+	@Bean
+	public LoanAgreementProcessor loanAgreementTemplateDtls(){
+		return new LoanAgreementProcessor(readServicesConfig.loanAgreementDao());
 	}
 }
