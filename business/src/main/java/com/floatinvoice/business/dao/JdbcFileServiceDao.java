@@ -218,5 +218,14 @@ public class JdbcFileServiceDao implements FileServiceDao {
 		}
 		
 	}
+
+	@Override
+	public byte[] viewLoanAgreement(String loanRefId) {
+		final String sql = "SELECT LOAN_AGREEMENT FROM LOAN_INFO WHERE LOAN_REF_ID = :loanRefId";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("loanRefId", loanRefId);
+		Map<String, Object> result = jdbcTemplate.queryForMap(sql, paramMap);
+		return (byte[]) result.get("LOAN_AGREEMENT");
+	}
 	
 }
