@@ -390,6 +390,7 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 			result.setSmeCtpy(rs.getString("BUYER_NAME"));
 			result.setTotPoolAmt(rs.getDouble("INVOICE_POOL_AMT"));
 			result.setInvoicePoolNo(rs.getString("POOL_ID"));
+			result.setSme(rs.getString("ACRONYM"));
 	/*		result.setInvoiceNo(rs.getString("INVOICE_NO"));
 			result.setStartDt(rs.getDate("INVOICE_START_DT"));
 			result.setEndDt(rs.getDate("INVOICE_END_DT"));*/
@@ -1196,6 +1197,30 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 		params.addValue("smeOrgId", smeOrgId);
 		List<InvoiceDtlsMsg> lst = jdbcTemplate.query(sql, params, new FinancierLoanApprovalViewRowMapper());
 		return new ListMsg<>(lst);
+	}
+
+	@Override
+	public ListMsg<InvoiceDtlsMsg> viewOfferedBidsOnInvoicePools(int orgId) {
+
+		final String sql = " SELECT IFC.HAIR_CUT, IFC.LOAN_AMT_OFFERED, IFC.REF_ID, IFC.INTEREST_RATE, IFC.LOAN_PERIOD, SME.ACRONYM, SMECTPY.ACRONYM AS BUYER_NAME, IP.INVOICE_POOL_AMT, IP.POOL_REF_ID, IP.POOL_ID, "
+				+ " OI.ACRONYM "
+				+ " FROM INVOICE_FINANCIER_CANDIDATES IFC "
+				+ " JOIN INVOICE_POOL IP "
+				+ " 	ON IFC.INVOICE_POOL_ID = IP.POOL_ID AND IP.POOL_STATUS = 1 AND IP.IS_BID_OPEN='Y' "
+				+ " JOIN ORGANIZATION_INFO OI "
+				+ "     ON OI.COMPANY_ID = IFC.FINANCIER_ID "
+				+ " JOIN ORGANIZATION_INFO SME "
+				+ "     ON SME.COMPANY_ID = IP.SUPPLIER_ID "
+				+ " JOIN ORGANIZATION_INFO SMECTPY "
+				+ "     ON SMECTPY.COMPANY_ID = IP.BUYER_ID "
+				+ " WHERE IFC.FINANCIER_ID = :orgId ORDER BY IP.POOL_ID ";
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("orgId", orgId);
+		List<InvoiceDtlsMsg> list = jdbcTemplate.query(sql, map, new FundedInvoiceViewRowMapper());
+		ListMsg<InvoiceDtlsMsg> result = new ListMsg<>(list);
+		if (list.size() > 0 )
+			result.setCount(list.size());
+		return result;
 	}
 
 
