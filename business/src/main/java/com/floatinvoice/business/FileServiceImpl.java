@@ -69,4 +69,11 @@ public class FileServiceImpl implements FileService {
 		return fileServiceDao.invoiceTemplateMetaData(category);
 	}
 
+	@Override
+	public ByteMsg viewLoanAgreement(String loanRefId) {
+		byte [] fileBytes =  fileServiceDao.viewLoanAgreement(loanRefId);
+		ByteMsg resultBytes = new ByteMsg(fileBytes);
+		return resultBytes;
+	}
+
 }
