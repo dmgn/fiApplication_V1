@@ -20,6 +20,8 @@ public interface InvoiceInfoDao {
 	
 	ListMsg<InvoiceDtlsMsg> fetchFundedInvoices( int orgId );
 
+	ListMsg<InvoiceDtlsMsg> viewOfferedBidsOnInvoicePools( int orgId );
+
 	ListMsg<InvoiceDtlsMsg> fetchPendingInvoices( int orgId );
 	
 	BaseMsg bidInvoice ( InvoiceDtlsMsg msg, int financierOrgId ) throws Exception;
