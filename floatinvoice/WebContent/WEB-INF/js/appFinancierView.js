@@ -14,9 +14,11 @@
         when('/findashboard', 't0').
         when('/finTxPg','t1').
         when('/t1/list','t1.list').
+        when('/t1/offers','t1.offers').
+        when('/t1/acceptedOffers','t1.acceptedOffers').
         when('/t1/approve','t1.approve').  
-        when('/t1/sanctioned','t1.sanctioned').       
-        when('/t1/funded','t1.funded').        
+        //when('/t1/sanctioned','t1.sanctioned').       
+        when('/t1/disburse','t1.disburse').        
         when('/t1/repaid','t1.repaid').  
         when('/finResearch', 't2').
 
@@ -56,23 +58,30 @@
 
     $routeSegmentProvider
       .within('t1')
+      .segment('offers', {
+        templateUrl:'/floatinvoice/html/finOffersView.html',
+        controller:'FinOffersViewCtrl'
+    });
+
+    $routeSegmentProvider
+      .within('t1')
+      .segment('acceptedOffers', {
+        templateUrl:'/floatinvoice/html/finAcceptedOffersView.html',
+        controller:'FinAcceptedOffersViewCtrl'
+    });
+
+   $routeSegmentProvider
+      .within('t1')
       .segment('approve', {
-        templateUrl:'/floatinvoice/html/finApprovalQueue.html',
-        controller:'FinApprovalViewCtrl'
+        templateUrl:'/floatinvoice/html/finApprovedLoan.html',
+        controller:'FinApprovedLoanCtrl'
     });
 
     $routeSegmentProvider
       .within('t1')
-      .segment('sanctioned', {
-        templateUrl:'/floatinvoice/html/finSanctionedLoan.html',
-        controller:'FinSanctionedLoanCtrl'
-    });
-
-    $routeSegmentProvider
-      .within('t1')
-      .segment('funded', {
-        templateUrl:'/floatinvoice/html/finFundedInvoiceView.html',
-        controller:'InvoiceLoanViewCtrl'
+      .segment('disburse', {
+        templateUrl:'/floatinvoice/html/finLoanDisbursedView.html',
+        controller:'LoanDisbursedViewCtrl'
     });
 
     $routeSegmentProvider
