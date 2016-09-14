@@ -74,7 +74,7 @@ public class FileController {
 	@RequestMapping(value = { "/download/agreement"}, method = RequestMethod.GET)
     public  void downloadAgreement(HttpServletResponse response, 
     		@RequestParam(value="refId", required=true) String refId,
-    		@RequestParam(value="fileName", required=true) String fileName,
+    		@RequestParam(value="fileName", required=false) String fileName,
     		@RequestParam(value="acro", required=true) String acro,
     		@RequestParam(value="type", required=true) String type) throws IOException {
         ByteMsg byteMsg = fileService.downloadLenderAgreement(acro, refId);
@@ -87,6 +87,21 @@ public class FileController {
         out.close();
     }
 	
+	@RequestMapping(value = { "/view/agreement"}, method = RequestMethod.GET)
+    public  void viewLenderAgreement(HttpServletResponse response, 
+    		@RequestParam(value="refId", required=true) String refId,
+    		@RequestParam(value="fileName", required=false) String fileName,
+    		@RequestParam(value="acro", required=true) String acro,
+    		@RequestParam(value="type", required=true) String type) throws IOException {
+        ByteMsg byteMsg = fileService.viewLoanAgreement(refId);
+        byte [] bytes = byteMsg.getBytes();
+        response.setContentType(getContentType(type));
+        response.setHeader("Content-Disposition", String.format("attachment;filename=\"%s\"", "Agreement.pdf"));
+        ServletOutputStream out = response.getOutputStream();
+        out.write(bytes);
+        out.flush();
+        out.close();
+    }
 	
 	@RequestMapping(value = { "/upload/agreement"}, method = RequestMethod.POST)
     public  ResponseEntity<BaseMsg> uploadFile(@RequestParam(value="acro", required=true) String acro,
