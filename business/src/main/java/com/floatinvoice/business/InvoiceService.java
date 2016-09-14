@@ -17,6 +17,8 @@ public interface InvoiceService {
 
 	ListMsg<InvoiceDtlsMsg> fetchFundedInvoices( String acronym );
 
+	ListMsg<InvoiceDtlsMsg> viewOfferedBidsOnInvoicePools( String acronym );
+	
 	BaseMsg uploadInvoiceFile ( UploadMessage msg) throws Exception;
 		
 	BaseMsg creditInvoice ( String refId ) throws Exception;
