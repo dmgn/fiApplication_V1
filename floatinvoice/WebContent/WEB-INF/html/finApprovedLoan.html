@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+ <body>
+  <div class="container">
+<br/>
+  <table ng-controller="FinApprovedLoanCtrl" class="table table-striped">
+    <tr>
+      <th><a href="" ng-click="sortField = 'loanId'">Loan #</th>
+      <th><a href="" ng-click="sortField = 'poolId'">Invoice Pool #</th>
+      <th><a href="" ng-click="sortField = 'smeAcro'">Borrower</th>
+      
+      <th><a href="" ng-click="sortField = 'loanStatus'">Loan Agreement</th>  
+      <th><a href="" ng-click="sortField = 'loanStatus'">Action</th>  
+    </tr>    
+    <tr>
+        <th>
+            <input type="text" ng-model="search.loanId" placeholder="search for loan number" class="input-sm form-control" />
+        </th>
+
+        <th>
+            <input type="text" ng-model="search.poolId" placeholder="search for pool number" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.smeAcro" placeholder="search for borrower" class="input-sm form-control"/>
+        </th>
+          <th>
+            <input type="text" ng-model="search.agreementReady" placeholder="search for agreement" class="input-sm form-control"/>
+        </th>
+    </tr>
+    <tr ng-repeat="item in loans | filter:search | orderBy:sortField">
+      <td>{{item.loanId}}</td>
+      <td>{{item.poolId}}</td>
+      <td>{{item.smeAcro}}</td>
+  
+      <td ng-if="item.agreementReady == false">Awaiting Loan Agreement</td>
+      <td ng-if="item.agreementReady == false"> <button ng-disabled="true" type="button" class="btn btn-primary">Disburse Loan</button></td>
+     
+     
+      <td ng-if="item.agreementReady == true"> <a ng-href="{{downLoadAgreement(item.refId)}}">View Details</a> </td>
+       <td ng-if="item.agreementReady == true"> 
+        <button type="button" class="btn btn-primary" ng-click="disburseLoan(item.refId)">Disburse Loan</button>
+      </td>
+    </tr>
+  </table>
+  </div>
+ </body>
+</html>
