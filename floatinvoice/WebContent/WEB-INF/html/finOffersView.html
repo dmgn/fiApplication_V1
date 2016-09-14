@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+ <body>
+  <div class="container">
+<br/>
+  <table ng-controller="FinOffersViewCtrl" class="table table-striped">
+    <tr>
+      <th><a href="" ng-click="sortField = 'invoicePoolNo'">Invoice Pool #</th>
+      <th><a href="" ng-click="sortField = 'sme'">Borrower</th>
+      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer</th>
+      <th><a href="" ng-click="sortField = 'totPoolAmt'">Pool Amount</th>
+      <th><a href="" ng-click="sortField = 'loanAmtOffer'">Loan Amount</th>
+      <th><a href="" ng-click="sortField = 'interestRate'">Interest Rate (%)</th>
+      <th><a href="" ng-click="sortField = 'loanPeriod'">Loan Tenure (Months)</th>
+    </tr>
+    <tr>
+        <th>
+            <input type="text" ng-model="search.invoicePoolNo" placeholder="search for pool #" class="input-sm form-control" />
+        </th>
+
+        <th>
+            <input type="text" ng-model="search.sme" placeholder="search for borrower" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.smeCtpy" placeholder="search for buyer" class="input-sm form-control"/>
+        </th>
+         <th>
+            <input type="text" ng-model="search.totPoolAmt" placeholder="search for pool amount" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.loanAmtOffer" placeholder="search for pool amount" class="input-sm form-control"/>
+        </th>        
+         <th>
+            <input type="text" ng-model="search.interestRate" placeholder="search for interest rate" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.loanPeriod" placeholder="search for loan tenure" class="input-sm form-control"/>
+        </th>
+    </tr>
+    <tr ng-repeat="item in invoices | filter:search | orderBy:sortField">
+      <td>{{item.invoicePoolNo}}</td>
+      <td>{{item.sme}}</td>
+      <td>{{item.smeCtpy}}</td>
+      <td>{{item.totPoolAmt}}</td>
+      <td>{{item.loanAmtOffer}}</td>
+      <td>{{item.interestRate}}</td>
+      <td>{{item.loanPeriod}}</td>
+
+  </table>
+  </div>
+ </body>
+</html>
