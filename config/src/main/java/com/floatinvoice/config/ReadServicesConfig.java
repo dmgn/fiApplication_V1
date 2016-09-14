@@ -16,10 +16,12 @@ import com.floatinvoice.business.dao.JdbcFileServiceDao;
 import com.floatinvoice.business.dao.JdbcFraudInvoiceInfoDao;
 import com.floatinvoice.business.dao.JdbcInvoiceFileUploadDao;
 import com.floatinvoice.business.dao.JdbcInvoiceInfoDao;
+import com.floatinvoice.business.dao.JdbcLoanAgreementDao;
 import com.floatinvoice.business.dao.JdbcOrgReadDao;
 import com.floatinvoice.business.dao.JdbcProfileDao;
 import com.floatinvoice.business.dao.JdbcRegistrationDao;
 import com.floatinvoice.business.dao.JdbcThirdPartyNotificationDao;
+import com.floatinvoice.business.dao.LoanAgreementDao;
 import com.floatinvoice.business.dao.OrgReadDao;
 import com.floatinvoice.business.dao.ProfileDao;
 import com.floatinvoice.business.dao.RegistrationDao;
@@ -31,7 +33,11 @@ public class ReadServicesConfig {
 	@Autowired
 	DataSourceConfig dataSourceConfig;
 
-		
+	@Bean
+	public LoanAgreementDao loanAgreementDao(){
+		return new JdbcLoanAgreementDao(dataSourceConfig.dataSource(), dataSourceConfig.lobHandler() );
+	}
+	
 	@Bean
 	public ThirdPartyNotificationDao thirdPartyNotificationDao(){
 		return new JdbcThirdPartyNotificationDao(dataSourceConfig.siteDataSource());
