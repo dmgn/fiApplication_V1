@@ -12,6 +12,8 @@ public interface FileServiceDao {
 	
 	byte [] downloadSupportDocs(String refId);
 	
+	byte [] viewLoanAgreement(String loanRefId);
+	
 	BaseMsg uploadLenderAgreement(UploadMessage msg) throws Exception;
 	
 	BaseMsg uploadInvoiceTemplate(UploadMessage msg) throws Exception;
