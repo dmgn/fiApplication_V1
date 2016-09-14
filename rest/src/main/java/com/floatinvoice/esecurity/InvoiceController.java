@@ -74,6 +74,11 @@ public class InvoiceController {
     public  ResponseEntity<ListMsg<InvoiceDtlsMsg>> viewFundedInvoices(@RequestParam(value="acro", required=true) String acro) {
         return new ResponseEntity<ListMsg<InvoiceDtlsMsg>>(invoiceService.fetchFundedInvoices(acro), HttpStatus.OK);
     }
+    
+    @RequestMapping(value = { "/bids/offer"}, method = RequestMethod.GET)
+    public  ResponseEntity<ListMsg<InvoiceDtlsMsg>> viewBidedInvoicePool(@RequestParam(value="acro", required=true) String acro) {
+        return new ResponseEntity<ListMsg<InvoiceDtlsMsg>>(invoiceService.viewOfferedBidsOnInvoicePools(acro), HttpStatus.OK);
+    }
 
     @RequestMapping(value = { "/pending"}, method = RequestMethod.GET)
     public  ResponseEntity<ListMsg<InvoiceDtlsMsg>> viewPendingInvoices(@RequestParam(value="acro", required=true) String acro) {
