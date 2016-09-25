@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.sql.DataSource;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -20,11 +23,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.floatinvoice.common.RegistrationStatusEnum;
 import com.floatinvoice.common.UUIDGenerator;
 import com.floatinvoice.common.UserContext;
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.ListMsg;
+import com.floatinvoice.messages.RegistrationStep1SignInDtlsMsg;
 import com.floatinvoice.messages.RegistrationStep2CorpDtlsMsg;
 import com.floatinvoice.messages.RegistrationStep3UserPersonalDtlsMsg;
 import com.floatinvoice.messages.SupportDocDtls;
@@ -173,6 +178,11 @@ public class JdbcRegistrationDao implements RegistrationDao {
 		return baseMsg;
 		
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public BaseMsg fileUpload(final UploadMessage msg) throws Exception {
@@ -246,5 +256,97 @@ public class JdbcRegistrationDao implements RegistrationDao {
 		}
 		
 	}
+
+
+	@Override
+	public RegistrationStep2CorpDtlsMsg fetchOrgInfo(String acronym) {
+		final String sql = " SELECT OI.ACRONYM, OI.COMPANY_NAME, OI.ORG_TYPE, OA.STREET, OA.CITY, OA.STATE, OA.ZIP_CODE,"
+				+ " OA.COUNTRY, OCI.PHONE "
+				+ " FROM ORGANIZATION_INFO OI "
+				+ " JOIN ORGANIZATION_ADDRESS OA "
+				+ " ON OI.COMPANY_ID = OA.COMPANY_ID "
+				+ " JOIN ORGANIZATION_CONTACT_INFO OCI "
+				+ " ON OA.ADDRESS_ID = OCI.ADDRESS_ID "
+				+ " WHERE ACRONYM = :acronym";
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("acronym", acronym);
+		RegistrationStep2CorpDtlsMsg result = jdbcTemplate.queryForObject(sql, paramMap, new RegistrationStep2CorpDtlsMsgRowMapper());
+		return result;
+	}
+
+	private class RegistrationStep2CorpDtlsMsgRowMapper implements RowMapper<RegistrationStep2CorpDtlsMsg>{
+
+		@Override
+		public RegistrationStep2CorpDtlsMsg mapRow(ResultSet rs, int arg1)
+				throws SQLException {
+			RegistrationStep2CorpDtlsMsg result = new RegistrationStep2CorpDtlsMsg();
+			result.setAcronym(rs.getString("ACRONYM"));
+			result.setCompName(rs.getString("COMPANY_NAME"));
+			result.setOrgType(rs.getString("ORG_TYPE"));
+			result.setStreet(rs.getString("STREET"));
+			result.setCity(rs.getString("CITY"));
+			result.setState(rs.getString("STATE"));
+			result.setZipCode(rs.getString("ZIP_CODE"));
+			result.setPhoneNo(rs.getString("PHONE"));
+			return result;
+		}
+		
+	}
+	
+	@Override
+	public RegistrationStep3UserPersonalDtlsMsg fetchUserBankInfo(String acronym) {
+		
+		final String sql = "SELECT SUI.BANK_ACCOUNT_NO, SUI.BANK_IFSC_CODE, SUI.BANK_NAME, SUI.DIRECTOR_FNAME, "
+				+ " SUI.DIRECTOR_LNAME, SUI.PAN_CARD_NO, SUI.AADHAR_CARD_ID "
+				+ " FROM SME_USER_INFO SUI JOIN "
+				+ " USER_ORGANIZATION_MAP UOM ON "
+				+ " SUI.USER_ID = UOM.USER_ID "
+				+ " JOIN ORGANIZATION_INFO OI "
+				+ " ON OI.COMPANY_ID = UOM.COMPANY_ID "
+				+ " WHERE OI.ACRONYM = :acronym";
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("acronym", acronym);
+		RegistrationStep3UserPersonalDtlsMsg result = jdbcTemplate.queryForObject(sql, paramMap, new RegistrationStep3UserPersonalDtlsMsgRowMapper());
+		return result;
+	}
+	
+	private class RegistrationStep3UserPersonalDtlsMsgRowMapper implements RowMapper<RegistrationStep3UserPersonalDtlsMsg>{
+
+		@Override
+		public RegistrationStep3UserPersonalDtlsMsg mapRow(ResultSet rs, int arg1)
+				throws SQLException {
+			RegistrationStep3UserPersonalDtlsMsg result = new RegistrationStep3UserPersonalDtlsMsg();
+			result.setBankName(rs.getString("BANK_NAME"));
+			result.setBankAcctNo(rs.getString("BANK_ACCOUNT_NO"));
+			result.setAadharCardId(rs.getString("AADHAR_CARD_ID"));
+			result.setDirectorFName(rs.getString("DIRECTOR_FNAME"));
+			result.setDirectorLName(rs.getString("DIRECTOR_LNAME"));
+			result.setIfscCode(rs.getString("BANK_IFSC_CODE"));
+			result.setPanCardNo(rs.getString("PAN_CARD_NO"));
+			return result;
+		}
+		
+	}
+
+
+	@Override
+	public BaseMsg updateRegisteredEmail(RegistrationStep1SignInDtlsMsg msg) {
+
+		BaseMsg baseMsg = null;
+		final String sql = "UPDATE CLIENT_LOGIN_INFO SET UPDATE_DT = :updatedt, PASSWORD = :passwd, REGISTRATION_STATUS = :regStatus WHERE EMAIL = :email ";
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("email", msg.getEmail());
+		paramMap.put("passwd", msg.getPasswd());
+		paramMap.put("regStatus", RegistrationStatusEnum.LOGIN.getCode());
+		paramMap.put("updatedt", new Timestamp(System.currentTimeMillis()));
+		int row = jdbcTemplate.update(sql, paramMap);
+		if(row == 1) {
+			baseMsg = new BaseMsg();
+		}
+		return baseMsg;
+	
+	}
+	
+	
 }
 
