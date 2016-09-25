@@ -9,9 +9,10 @@ public enum EnquiryStatusEnum {
 
 	NEW(0, "NEW"),
 	CLOSED(1, "CLOSED"),
-	PENDING(2, "PENDING"),
+	QUALIFIED(2, "QUALIFIED"),
 	STAGED(3, "STAGED"),
-	RELEASED(4, "RELEASED");
+	RELEASED(4, "RELEASED"),
+	REJECTED(5, "REJECTED");
 	
 	int code;
 	String text;
