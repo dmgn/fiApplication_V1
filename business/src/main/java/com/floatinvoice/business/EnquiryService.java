@@ -15,6 +15,10 @@ public interface EnquiryService {
 	
 	BaseMsg sendThirdPartyNotification(String refId);
 	
+	BaseMsg qualifyEnquiry(String refId, String email);
+	
+	BaseMsg rejectEnquiry(String refId, String email);
+	
 	BaseMsg notifyFloatInvoice(String user, String acronym, String refId);
 	
 	BaseMsg setupTempAcct(OrgDtlsMsg orgDtls);
