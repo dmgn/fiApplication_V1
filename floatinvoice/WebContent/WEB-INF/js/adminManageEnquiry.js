@@ -4,7 +4,7 @@
 
       $scope.adtabs = [
           { link : '#/e1/list', label : 'New' },
-          { link : '#/e1/pending', label: 'Pending'},
+          { link : '#/e1/pending', label: 'Qualified'},
           { link : '#/e1/staged', label : 'Staged' },
           { link : '#/e1/released', label : 'Released' }
         ];  
