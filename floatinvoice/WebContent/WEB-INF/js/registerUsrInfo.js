@@ -10,10 +10,10 @@
             function($scope, $window, $http, $location) {
             $scope.user= {};
             $scope.respMsg = "";
-            $scope.nextAction = function(){
+            /*$scope.nextAction = function(){
                 //bcsetSelectedTab(bctabs[1]);
                 $location.path("/documents");
-            }
+            }*/
 
             // function to submit the form after all validation has occurred            
             $scope.submitForm = function() {
@@ -41,6 +41,10 @@
                 }
             };
 
+            $scope.usrInfoBreadCrumbs = function(){
+                $scope.breadCrumbs();
+            }
+
              $scope.checkRespMsg = function(){
 
                 if($scope.respMsg.length > 1){
@@ -54,13 +58,14 @@
 
             $scope.nextAction = function(){
                 //bcsetSelectedTab(bctabs[1]);
-                $location.path("/documents");
+                $location.path("/createApp");
+                $scope.breadCrumbs();
             }
 
             $scope.nextPage = function(){
                       $http({
                         method:'GET',
-                        url:'/floatinvoice/register/docs',
+                        url:'/floatinvoice/register/chooseProductPage',
                         data:$scope.user,
                         headers:{'Content-Type':'application/json'}
                         }).then(function successCallback(response) {
