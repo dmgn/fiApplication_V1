@@ -5,4 +5,8 @@ floatInvoiceListApp
         $http.get('/floatinvoice/invoice/viewOffers?acro='+acro).success(function(data){
         $scope.invoices = data.list;
       });
+
+         $scope.downLoadAgreement = function(loanRefId){
+	    	return "/floatinvoice/view/agreement?refId="+loanRefId+"&acro="+acro+"&type=pdf";
+	    }
 }]);
