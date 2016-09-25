@@ -12,7 +12,8 @@ public class SecurityInterceptor extends AbstractInterceptor{
 		
 		if(request.getRequestURI().contains("loginSubmit") || 
 				request.getRequestURI().contains("signInInfo")  || 
-				request.getRequestURI().endsWith("/loginpage")){
+				request.getRequestURI().endsWith("/loginpage") || 
+				request.getRequestURI().contains("/register/delete/usrInfo")){
 			return true;
 		}
 		return false;
