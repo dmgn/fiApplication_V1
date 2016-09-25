@@ -6,12 +6,16 @@ import org.springframework.context.annotation.Configuration;
 
 import com.floatinvoice.business.dao.BankInfoDao;
 import com.floatinvoice.business.dao.EnquiryDao;
+import com.floatinvoice.business.dao.FIApplicationDao;
+import com.floatinvoice.business.dao.FIProductDao;
 import com.floatinvoice.business.dao.FileServiceDao;
 import com.floatinvoice.business.dao.FraudInvoiceInfoDao;
 import com.floatinvoice.business.dao.InvoiceFileUploadDao;
 import com.floatinvoice.business.dao.InvoiceInfoDao;
 import com.floatinvoice.business.dao.JdbcBankInfoDao;
 import com.floatinvoice.business.dao.JdbcEnquiryDao;
+import com.floatinvoice.business.dao.JdbcFIApplicationDao;
+import com.floatinvoice.business.dao.JdbcFIProductDao;
 import com.floatinvoice.business.dao.JdbcFileServiceDao;
 import com.floatinvoice.business.dao.JdbcFraudInvoiceInfoDao;
 import com.floatinvoice.business.dao.JdbcInvoiceFileUploadDao;
@@ -32,7 +36,20 @@ public class ReadServicesConfig {
 	
 	@Autowired
 	DataSourceConfig dataSourceConfig;
-
+	
+	@Autowired
+	BusinessServiceConfig businessServiceConfig;
+	
+	@Bean
+	public FIProductDao productDao(){
+		return new JdbcFIProductDao(dataSourceConfig.dataSource());
+	}
+	
+	@Bean
+	public FIApplicationDao fiApplicationDao(){
+		return new JdbcFIApplicationDao(dataSourceConfig.dataSource());
+	}
+	
 	@Bean
 	public LoanAgreementDao loanAgreementDao(){
 		return new JdbcLoanAgreementDao(dataSourceConfig.dataSource(), dataSourceConfig.lobHandler() );
@@ -45,7 +62,8 @@ public class ReadServicesConfig {
 	
 	@Bean
 	public EnquiryDao enquiryDao(){
-		return new JdbcEnquiryDao(dataSourceConfig.siteDataSource(), dataSourceConfig.dataSource());
+		return new JdbcEnquiryDao(dataSourceConfig.siteDataSource(), dataSourceConfig.dataSource(), profileDao(), registrationDao(),
+				businessServiceConfig.emailService());
 	}
 
 	@Bean
