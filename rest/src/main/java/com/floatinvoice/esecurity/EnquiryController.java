@@ -43,7 +43,7 @@ public class EnquiryController {
     }
 	
 	@RequestMapping(value = { "/prospectsDocs"}, method = RequestMethod.GET)
-    public ModelAndView fetchProspectsDocsPage(@RequestParam(value="refId", required=true) String refId) throws Exception {
+    public ModelAndView fetchProspectsDocsPage(@RequestParam(value="refId", required=false) String refId) throws Exception {
 		ModelAndView model = new ModelAndView();
         model.addObject("refId", refId);
         model.setViewName("prospectsDocsPage");
@@ -65,5 +65,15 @@ public class EnquiryController {
     		@RequestParam(value="acro", required=false) String acronym,
     		@RequestParam(value="user", required=false) String user) throws Exception {
         return new ResponseEntity<>(enquiryService.notifyFloatInvoice(user, acronym, refId), HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = { "/qualify/enquiry"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMsg> qualifyEnquiry(@RequestBody EnquiryFormMsg enquiry) throws Exception {
+        return new ResponseEntity<>(enquiryService.qualifyEnquiry(enquiry.getRefId(), enquiry.getEmail()), HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = { "/reject/enquiry"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMsg> rejectEnquiry(@RequestBody EnquiryFormMsg enquiry) throws Exception {
+        return new ResponseEntity<>(enquiryService.rejectEnquiry(enquiry.getRefId(), enquiry.getEmail()), HttpStatus.OK);
     }
 }
