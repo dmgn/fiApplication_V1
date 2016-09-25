@@ -988,7 +988,7 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 		Map<String, Object> map = orgReadDao.findOrgId(acronym);
 		int financierOrgId = (Integer) map.get("company_id");
 		final String sql = " SELECT NULL AS FINANCIER_ACRO, IP.POOL_REF_ID, IP.POOL_ID, IP.INVOICE_POOL_AMT, SME.ACRONYM AS SMEACRO, BUYER.ACRONYM AS BUYERACRO, IFC.LOAN_AMT_OFFERED, "
-				+ " IFC.INTEREST_RATE, IFC.LOAN_PERIOD "
+				+ " IFC.INTEREST_RATE, IFC.LOAN_PERIOD, NULL AS LOAN_AGREEMENT, NULL AS LOAN_REF_ID "
 				+ " FROM INVOICE_FINANCIER_MAP IFM JOIN "
 				+ " INVOICE_POOL IP "
 				+ " ON IFM.INVOICE_POOL_ID = IP.POOL_ID "
@@ -1023,6 +1023,8 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 			result.setInvoicePoolNo(rs.getString("POOL_ID"));
 			result.setLoanPeriod(rs.getInt("LOAN_PERIOD"));
 			result.setFinancier(rs.getString("FINANCIER_ACRO"));
+			result.setAgreementReady(rs.getBlob("LOAN_AGREEMENT") == null ? false : true);	
+			result.setLoanRefId(rs.getString("LOAN_REF_ID"));
 			return result;
 		}
 
@@ -1179,7 +1181,7 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 			throws Exception {
 		
 		final String sql = " SELECT FINANCIER.ACRONYM AS FINANCIER_ACRO, IP.POOL_REF_ID, IP.POOL_ID, IP.INVOICE_POOL_AMT, SME.ACRONYM AS SMEACRO, BUYER.ACRONYM AS BUYERACRO, IFC.LOAN_AMT_OFFERED, "
-				+ " IFC.INTEREST_RATE, IFC.LOAN_PERIOD "
+				+ " IFC.INTEREST_RATE, IFC.LOAN_PERIOD, LI.LOAN_AGREEMENT, LI.LOAN_REF_ID "
 				+ " FROM INVOICE_FINANCIER_MAP IFM JOIN "
 				+ " INVOICE_POOL IP "
 				+ " ON IFM.INVOICE_POOL_ID = IP.POOL_ID "
@@ -1191,10 +1193,14 @@ public class JdbcInvoiceInfoDao implements InvoiceInfoDao {
 				+ " ON BUYER.COMPANY_ID = IP.BUYER_ID "
 				+ " JOIN ORGANIZATION_INFO FINANCIER "
 				+ " ON FINANCIER.COMPANY_ID = IFC.FINANCIER_ID "
-				+ " WHERE IP.SUPPLIER_ID = :smeOrgId AND "
-				+ " IP.POOL_ID NOT IN (SELECT INVOICE_POOL_ID FROM LOAN_INFO LI WHERE LI.SME_ORG_ID = :smeOrgId ) ";
+				+ " JOIN LOAN_INFO LI "
+				+ " ON IP.SUPPLIER_ID = LI.SME_ORG_ID AND IP.POOL_ID = LI.INVOICE_POOL_ID "
+				+ " WHERE IP.SUPPLIER_ID = :smeOrgId "
+				+ " AND LI.LOAN_STATUS = :status ";
+
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("smeOrgId", smeOrgId);
+		params.addValue("status", LoanStatus.SANCTIONED.getCode());
 		List<InvoiceDtlsMsg> lst = jdbcTemplate.query(sql, params, new FinancierLoanApprovalViewRowMapper());
 		return new ListMsg<>(lst);
 	}
