@@ -18,8 +18,16 @@ var tmpLogin = angular.module('tmpLogin', ['ngMaterial', 'ngMessages']);
                         url:'/floatinvoice/usrLogin',
                         headers:{'Content-Type':'application/json', 'remote-user':$scope.user.email}
                         }).then(function successCallback(response) {
-                            $window.location.replace('/floatinvoice/enquiryDisplay');
-                            console.log(response);
+                            console.log(response.data.systemMessages.info[0].code);
+                            if (response.data.systemMessages.info[0].code == 2){
+                                 $window.location.replace('/floatinvoice/register#/companyInfo');
+                            }else if (response.data.systemMessages.info[0].code == 3){
+                                $window.location.replace('/floatinvoice/register#/personalInfo');
+                            }else if (response.data.systemMessages.info[0].code == 4){
+                                $window.location.replace('/floatinvoice/register#/documents');
+                            }else{
+                                $window.location.replace('/floatinvoice/register#/signInInfo');
+                            }
                           }, function errorCallback(response) {
                             console.log(response);
                       });
