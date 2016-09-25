@@ -81,5 +81,51 @@
                 });
               });
             }
+
+
+
+         $scope.selectedoption = "";
+
+         $http.get('/floatinvoice/enquiry/2')
+               .success(function(data){
+                    $scope.enquiryList = data.list;
+               });
+
+        $scope.refresh = function(refId){
+          var index = -1;
+          var enquiryList =  $scope.enquiryList;
+          for (var i=0; i<enquiryList.length; i++){
+            if( enquiryList[i].refId == refId ) {
+                index = i;
+                break;
+            }
+          }
+          $scope.enquiryList.splice(index, 1);
+        };
+
+
+          $scope.notifyFI = function() {
+
+          console.log($scope.selectedoption);
+          $http({
+                method:'PUT',
+                data:$scope.user,
+                url:'/floatinvoice/notify/fi/'+$scope.selectedoption,
+                headers:{'Content-Type':'application/json'}
+                }).then(function successCallback(response) {
+                    $scope.refresh($scope.selectedoption);
+                    console.log(response);
+                  }, function errorCallback(response) {
+                    console.log(response);
+              });
+
+        }
+
+          $scope.optionSelected = function(){
+            
+            return $scope.selectedoption == "" ? true : false;
+          }
+            
+
            
         }])
