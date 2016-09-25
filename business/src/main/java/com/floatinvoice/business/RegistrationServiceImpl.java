@@ -61,4 +61,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return registrationDao.summary(acronym);
 	}
 
+	@Override
+	public RegistrationStep2CorpDtlsMsg fetchOrgInfo(String acronym) {
+		return registrationDao.fetchOrgInfo(acronym);
+	}
+
+	@Override
+	public RegistrationStep3UserPersonalDtlsMsg fetchUserBankInfo(String acronym) {
+		return registrationDao.fetchUserBankInfo(acronym);
+	}
+
+	@Override
+	public BaseMsg updateRegisteredEmail(RegistrationStep1SignInDtlsMsg msg) {
+		return registrationDao.updateRegisteredEmail(msg);
+	}
+
 }
