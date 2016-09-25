@@ -17,7 +17,8 @@
                         headers:{'Content-Type':'application/json'}
                         }).then(function successCallback(response) {
                             //$window.location.replace('/floatinvoice/register/orgInfoPage');
-                            console.log(response);
+                           
+                            console.log($scope.bctabs);
                             $scope.errRespMsg = "";
                             $scope.respMsg = "Message saved successfully."
                           }, function errorCallback(response) {
@@ -28,10 +29,10 @@
             $scope.checkRespMsg = function(){
 
                 if($scope.respMsg.length > 1){
-                    console.log("returning true");
+                   
                     return true;
                 }else{
-                    console.log("returning false");
+                    
                     return false;
                 }   
             }
@@ -39,6 +40,7 @@
             $scope.nextAction = function(){
                 //bcsetSelectedTab(bctabs[1]);
                 $location.path("/companyInfo");
+                $scope.breadCrumbs();
             }
 
             $scope.nextPage = function(){
@@ -50,6 +52,7 @@
                         }).then(function successCallback(response) {
                             //$window.location.replace('/floatinvoice/register/orgInfoPage');
                             console.log(response);
+                            //$scope.breadCrumbs();
                           }, function errorCallback(response) {
                             console.log(response);
                       });
