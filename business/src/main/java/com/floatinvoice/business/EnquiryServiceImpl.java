@@ -7,6 +7,7 @@ import com.floatinvoice.business.dao.EnquiryDao;
 import com.floatinvoice.business.dao.OrgReadDao;
 import com.floatinvoice.common.EnquiryStatusEnum;
 import com.floatinvoice.common.OrgType;
+import com.floatinvoice.common.UserContext;
 import com.floatinvoice.common.Utility;
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.EnquiryFormMsg;
@@ -57,7 +58,7 @@ public class EnquiryServiceImpl implements EnquiryService {
 	@Override
 	public BaseMsg sendAcctSetupNotification(String email, String refId, String password) {
 		//EnquiryFormMsg enquiry = enqDao.findOneEnquiry(refId);
-		int result = enqDao.updateEnquiry(EnquiryStatusEnum.PENDING.getCode(), refId);
+		int result = enqDao.updateEnquiry(EnquiryStatusEnum.QUALIFIED.getCode(), refId);
 		BaseMsg response = new BaseMsg();
 		if(result > 0){
 			emailService.sendEmail("Float Invoice Account Setup", email, 
@@ -74,6 +75,9 @@ public class EnquiryServiceImpl implements EnquiryService {
 	public BaseMsg notifyFloatInvoice(String user, String acronym, String refId) {
 		EnquiryFormMsg enquiry = enqDao.findOneEnquiry(refId);
 		int result = enqDao.updateEnquiry(EnquiryStatusEnum.STAGED.getCode(), refId);
+		Map<String, Object> org = orgReadDao.findOrgAndUserId(UserContext.getUserName());
+		mapEnquiryToOrgSetup(enquiry.getRefId(), enquiry.getEnqId(), (Integer)org.get("COMPANY_ID"), 
+				(Integer)org.get("USER_ID"));
 		BaseMsg response = new BaseMsg();
 		if(result > 0){			
 			emailService.sendEmail("Documents Uploaded - " + enquiry.getContactName(), "support@floatinvoice.com", new StringBuffer("All requested documents are uploaded for enquiry reference id "+enquiry.getRefId()));
@@ -94,7 +98,7 @@ public class EnquiryServiceImpl implements EnquiryService {
 			
 			for(Integer nbfcOrgId : nbfcOrgIds){
 				enqDao.saveEnquiryNotifications(enquiry, nbfcOrgId);
-				emailService.sendEmail("Prospect from Float Invoice", "askforgautam@gmail.com", new StringBuffer("Please login to floatinvoice and check out the prospect details.")); // change the email
+				emailService.sendEmail("Prospect from Float Invoice", "support@floatinvoice.com", new StringBuffer("Please login to floatinvoice and check out the prospect details.")); // change the email
 			}
 			response.addInfoMsg("Enquiry Updated Successfully", 0);
 		}else{
@@ -145,6 +149,16 @@ public class EnquiryServiceImpl implements EnquiryService {
 	public EnquiryFormMsg viewStagedEnquiry(int enqStatus, String refId,
 			String companyId) {
 		return enqDao.viewStagedEnquiry(enqStatus, refId, companyId);
+	}
+
+	@Override
+	public BaseMsg qualifyEnquiry(String refId, String email) {
+		return enqDao.qualifyEnquiry(refId, email);
+	}
+
+	@Override
+	public BaseMsg rejectEnquiry(String refId, String email) {
+		return enqDao.rejectEnquiry(refId, email);
 	}
 
 }
