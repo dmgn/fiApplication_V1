@@ -1,6 +1,7 @@
 package com.floatinvoice.business;
 
 import com.floatinvoice.business.dao.ProfileDao;
+import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.UserProfile;
 
 public class ProfileServiceImpl implements ProfileService {
@@ -29,6 +30,12 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public boolean verifyTempUserProfileExists(String userEmail) {
 		return profileDao.verifyTempUserProfileExists(userEmail);
+	}
+
+	@Override
+	public BaseMsg deleteUser(String userEmail) {
+		
+		return profileDao.deleteUser(userEmail);
 	}
 
 	
