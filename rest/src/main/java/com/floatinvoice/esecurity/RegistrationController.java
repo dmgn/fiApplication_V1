@@ -1,16 +1,19 @@
 package com.floatinvoice.esecurity;
 
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.floatinvoice.business.ProfileService;
 import com.floatinvoice.business.RegistrationService;
 import com.floatinvoice.common.UserContext;
@@ -33,6 +36,13 @@ public class RegistrationController {
 	@Autowired
 	RegistrationService registrationSvc;
 
+	
+	@RequestMapping(value = { "/delete/usrInfo"}, method = RequestMethod.DELETE)
+    public ResponseEntity<BaseMsg> delete(@RequestParam(value="usr", required=true) String usr) {
+		BaseMsg baseMsg = profileService.deleteUser(usr);
+        return new ResponseEntity<>(baseMsg, HttpStatus.OK);
+    }
+	
 	@RequestMapping(value = { "/usrInfo"}, method = RequestMethod.GET)
     public UserProfile userInfo(@RequestParam(value="usr", required=true) String usr) {
 		UserProfile userProfile = profileService.fetchUserProfile(usr);
@@ -50,11 +60,16 @@ public class RegistrationController {
 	
 	@RequestMapping(value = { "/signInInfo"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMsg> signInInfo(@RequestBody RegistrationStep1SignInDtlsMsg regStep1,
-    		 HttpSession session) {
+    		 HttpSession session, Model model) {
 		String email = regStep1.getEmail();
+		model.addAttribute("email", email);		
 		initializeSession(email, session);
-		
-        return new ResponseEntity<>(registrationSvc.registerSignInInfo(regStep1), HttpStatus.OK);
+		if(profileService.verifyTempUserProfileExists(email)){			
+			return new ResponseEntity<>(registrationSvc.updateRegisteredEmail(regStep1) , HttpStatus.OK);
+		}else{
+			return new ResponseEntity<>(registrationSvc.registerSignInInfo(regStep1), HttpStatus.OK);
+		}
+        
     }
 	
 	@RequestMapping(value = { "/corpInfo"}, method = RequestMethod.POST)
@@ -64,12 +79,23 @@ public class RegistrationController {
         return new ResponseEntity<>(registrationSvc.registerOrgInfo(regStep2), HttpStatus.OK);
     }
 	
+	@RequestMapping(value = { "/findCorpInfo"}, method = RequestMethod.POST)
+    public ResponseEntity<RegistrationStep2CorpDtlsMsg> findCorpInfo(@RequestParam(value="acro", required=true) String acro) {
+        return new ResponseEntity<>(registrationSvc.fetchOrgInfo(acro), HttpStatus.OK);
+    }
+	
+	
 	@RequestMapping(value = { "/usrInfo"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMsg> regUserInfo(@RequestBody RegistrationStep3UserPersonalDtlsMsg regStep3 ) {
        // ModelAndView model = new ModelAndView();
        // model.setViewName("homePage");
         return new ResponseEntity<>(registrationSvc.registerUserBankInfo(regStep3), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = { "/findUsrInfo"}, method = RequestMethod.POST)
+    public ResponseEntity<RegistrationStep3UserPersonalDtlsMsg> findUsrInfo(@RequestParam(value="acro", required=true) String acro) {
+        return new ResponseEntity<>(registrationSvc.fetchUserBankInfo(acro), HttpStatus.OK);
+    }
 	
 	@RequestMapping(value = { "/upload"}, method = RequestMethod.POST)						// Upload supporting docs on registration page
     public  ResponseEntity<BaseMsg> uploadFile(/*@RequestParam(value="acro", required=true) String acro,*/
