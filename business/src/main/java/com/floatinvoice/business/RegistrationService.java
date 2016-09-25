@@ -12,6 +12,8 @@ public interface RegistrationService {
 
 	BaseMsg registerSignInInfo( RegistrationStep1SignInDtlsMsg msg );
 	
+	BaseMsg updateRegisteredEmail(RegistrationStep1SignInDtlsMsg msg);
+	
 	BaseMsg registerOrgInfo( RegistrationStep2CorpDtlsMsg msg );
 	
 	BaseMsg registerUserBankInfo (RegistrationStep3UserPersonalDtlsMsg msg);
@@ -19,4 +21,10 @@ public interface RegistrationService {
 	BaseMsg uploadSupportDocs ( UploadMessage msg) throws Exception;
 
 	ListMsg<SupportDocDtls> summary(String acronym);
+	
+	RegistrationStep2CorpDtlsMsg fetchOrgInfo(String acronym);
+	
+	RegistrationStep3UserPersonalDtlsMsg fetchUserBankInfo(String acronym);
+
 }
+
