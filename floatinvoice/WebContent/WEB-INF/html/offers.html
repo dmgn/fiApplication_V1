@@ -7,7 +7,7 @@
       <th><a href="" ng-click="sortField = 'totPoolAmt'">Total Pool Amount</th>
       <th><a href="" ng-click="sortField = 'interestRate'">Interest Rate</th>
       <th><a href="" ng-click="sortField = 'financier'">Financier</th>
-      <th/>    
+      <th><a href="" ng-click="sortField = 'loanStatus'">Loan Agreement</th>   
     </tr>
     <tr>
         <th>
@@ -27,7 +27,8 @@
          <th>
             <input type="text" ng-model="search.financier" placeholder="search for financier" class="input-sm form-control"/>
         </th>
-         <th width=>
+        <th>
+            <input type="text" ng-model="search.agreementReady" placeholder="search for agreement" class="input-sm form-control"/>
         </th>
     </tr>
     <tr dir-paginate="item in invoices | filter:search | orderBy:sortField| itemsPerPage: 10">
@@ -45,7 +46,9 @@
       <td>&#x20B9; {{item.totPoolAmt}}</td>
       <td>{{item.interestRate}}%</td>
       <td>{{item.financier}}</td>
-     </tr>  
+      <td ng-if="item.agreementReady == false">Awaiting Loan Agreement</td>
+      <td ng-if="item.agreementReady == true"> <a ng-href="{{downLoadAgreement(item.loanRefId)}}">View Details</a> </td>
+    </tr>  
     <!-- <tr ng-if="item.expanded" ng-repeat-end="">
       <td colspan="3">{{item.poolRefId}}</td>
     </tr>  --> 
