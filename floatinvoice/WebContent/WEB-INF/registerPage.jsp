@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html ng-app="registrationApp" >
 <head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.504/styles/kendo.common.min.css" />
   <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.504/styles/kendo.default.min.css" />
     <!-- CSS ===================== -->
@@ -31,6 +32,7 @@
   <script src="js/registerAppSignIn.js"></script>
   <script src="js/registerOrgInfo.js"></script>
   <script src="js/registerUsrInfo.js"></script>
+  <script src="js/registerProductInfo.js"></script>
   <script src="js/supportingDoc.js"></script>
   <script src="js/modalcontroller.js"></script>
 
@@ -42,10 +44,17 @@
 <!-- apply angular app and controller to our body -->
 <body ng-controller="RegistrationController">
   <div class="container">
-      <div class="col-sm-12">
+      <div class="col-sm-9">
           <img src = "img/logo.jpg" height="100"/>
       </div><!-- col-sm-8  col-sm-offset-2-->
-
+      <div class="col-sm-3 ">
+          
+          <span style="float:right">
+            <a href="/floatinvoice/logout" class="btn btn-primary" title="Logout" data-toggle="tooltip" >
+            <span class="glyphicon glyphicon-log-out"></span></a>
+          </span>
+         
+      </div>
       <div class="col-sm-12" style="margin-top: 2em;">       
         
           <div class="custbreadcrumb flat" >
@@ -53,7 +62,7 @@
             <a href="{{bctabs[1].link}}" ng-class='bctabClass(bctabs[1])' ng-click='bcsetSelectedTab(bctabs[1])'>{{bctabs[1].label}}</a>
             <a href="{{bctabs[2].link}}" ng-class='bctabClass(bctabs[2])' ng-click='bcsetSelectedTab(bctabs[2])'>{{bctabs[2].label}}</a>
             <a href="{{bctabs[3].link}}" ng-class='bctabClass(bctabs[3])' ng-click='bcsetSelectedTab(bctabs[3])'>{{bctabs[3].label}}</a>
-
+           <!--  <a href="{{bctabs[4].link}}" ng-class='bctabClass(bctabs[4])' ng-click='bcsetSelectedTab(bctabs[4])'>{{bctabs[4].label}}</a> -->
           </div>
         
       </div>
