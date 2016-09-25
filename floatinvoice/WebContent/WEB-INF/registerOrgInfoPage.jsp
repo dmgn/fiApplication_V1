@@ -1,5 +1,5 @@
 
-<div class="col-sm-8">
+<div class="col-sm-8" >
     <md-content layout-padding>
     <div>
     <span >
@@ -31,7 +31,7 @@
           <input name="phoneNo" ng-model="user.phoneNo" ng-pattern="/^([0-9]{10})$/" />
           <div class="hint" ng-show="showHints">(##########)</div>
           <div ng-messages="userForm.phoneNo.$error" ng-hide="showHints">
-            <div ng-message="pattern">########## - Please enter a valid phone number.</div>
+            <div ng-message="pattern">########### - Please enter a valid 10 digit phone number.</div>
           </div>
          </md-input-container>
         </div>    
@@ -56,8 +56,8 @@
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Postal Code</label>
-            <input name="zipCode" ng-model="user.zipCode" placeholder="12345"
-                   required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+            <input name="zipCode" ng-model="user.zipCode" placeholder="123456"
+                   required ng-pattern="/^[0-9]{6}$/" md-maxlength="6">
             <div ng-messages="userForm.zipCode.$error" role="alert" multiple>
               <div ng-message="required" class="my-message">You must supply a postal code.</div>
               <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
