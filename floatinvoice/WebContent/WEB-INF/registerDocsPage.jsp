@@ -64,6 +64,38 @@
 
         </div>
 
+            <div style="padding-top: 1em;">
+            <h4> Enquiry list </h4>
+            <table class="table table-striped">
+             <tr>
+                  <th></th>
+                  <th><a href="" ng-click="sortField = 'fileName'">Contact Name</th>
+                  <th><a href="" ng-click="sortField = 'timest'">Enquiry Date</th>
+                  <th><a href="" ng-click="sortField = 'categ'">Email</th>
+                  <th><a href="" ng-click="sortField = 'user'">Status</th>
+                </tr>  
+                <tr ng-repeat="enquiry in enquiryList | filter:search | orderBy:sortField">
+                    <!-- <td><a href ng-click="openFile(file)">{{file.fileName}}</a></td> -->
+                    <!--<a ng-href="{{getUrl(file)}}">-->
+                   <!--  <td><input type="radio" name="refId" ng-value="{{enquiry.refId}}" ng-model="$parent.refId"/></td> -->
+                   <td><input type="radio" name="enquiry" ng-value="enquiry.refId" ng-model="$parent.selectedoption"></td>
+                    <td>{{enquiry.contactName}}</a></td>  
+                    <td>{{enquiry.enqDate}}</td>
+                    <td>{{enquiry.email}}</td>
+                    <td>{{enquiry.enqStatus}}</td>
+                    
+                </tr>
+
+            </table>
+
+        </div>
+        <div align="center">   
+           
+          <button type="button" class="btn btn-primary" ng-disabled="optionSelected()" ng-Click=notifyFI()>Notify Float Invoice</button>
+            
+
+        </div>
+
     </div>
 <!-- removeUrl: 'remove' -->
 </div>
