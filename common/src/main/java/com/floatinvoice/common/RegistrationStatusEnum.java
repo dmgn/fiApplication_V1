@@ -2,10 +2,12 @@ package com.floatinvoice.common;
 
 public enum RegistrationStatusEnum {
 
+	TEMP(0, "Temporary"),
 	LOGIN(1, "Login"),
 	ORG(2, "OrgInfo"),
 	USER(3, "UserInfo"),
-	HOME(4, "Home");
+	DOCS(4, "Documents"),
+	HOME(5, "Home");
 	
 	int code;
 	String text;
