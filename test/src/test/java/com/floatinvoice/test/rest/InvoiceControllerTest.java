@@ -268,4 +268,14 @@ public class InvoiceControllerTest {
 		
 		mockMvc.perform(reqBuilder).andDo(print());		
 	}
+	
+	
+	@Test
+	public void testSaveApp() throws Exception{
+		BaseMsg msg = new BaseMsg();
+		msg.setRefId("PRODUCTREFID");
+		RequestBuilder req = post("/saveApp").header("remote-user", "askforgautam@gmail.com")
+				.contentType(MediaType.APPLICATION_JSON).content(objMapper.writeValueAsString(msg));
+		MvcResult res = mockMvc.perform(req).andDo(print()).andReturn();	
+	}
 }
