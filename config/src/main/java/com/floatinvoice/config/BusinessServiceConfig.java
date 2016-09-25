@@ -12,12 +12,16 @@ import com.floatinvoice.business.EmailService;
 import com.floatinvoice.business.EmailServiceImpl;
 import com.floatinvoice.business.EnquiryService;
 import com.floatinvoice.business.EnquiryServiceImpl;
+import com.floatinvoice.business.FIApplicationService;
+import com.floatinvoice.business.FIApplicationServiceImpl;
 import com.floatinvoice.business.FileService;
 import com.floatinvoice.business.FileServiceImpl;
 import com.floatinvoice.business.FraudInvoiceService;
 import com.floatinvoice.business.FraudInvoiceServiceImpl;
 import com.floatinvoice.business.InvoiceService;
 import com.floatinvoice.business.InvoiceServiceImpl;
+import com.floatinvoice.business.ProductService;
+import com.floatinvoice.business.ProductServiceImpl;
 import com.floatinvoice.business.ProfileService;
 import com.floatinvoice.business.ProfileServiceImpl;
 import com.floatinvoice.business.RegistrationService;
@@ -32,6 +36,17 @@ public class BusinessServiceConfig {
 	
 	@Autowired
 	Environment environment;
+	
+	@Bean
+	public FIApplicationService fiAppService(){
+		return new FIApplicationServiceImpl(readServicesConfig.enquiryDao(), readServicesConfig.orgReadDao(), readServicesConfig.fiApplicationDao(),
+				readServicesConfig.productDao());
+	}
+	
+	@Bean
+	public ProductService productService(){
+		return new ProductServiceImpl(readServicesConfig.productDao());
+	}
 	
 	@Bean
 	public EnquiryService enquiryService(){
