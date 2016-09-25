@@ -1,5 +1,6 @@
 package com.floatinvoice.business;
 
+import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.UserProfile;
 
 public interface ProfileService {
@@ -14,4 +15,5 @@ public interface ProfileService {
 	
 	boolean verifyTempUserProfileExists(String userEmail);
 
+	BaseMsg deleteUser(String userEmail);
 }
