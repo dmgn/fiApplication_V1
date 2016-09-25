@@ -10,12 +10,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import com.floatinvoice.business.EmailService;
+import com.floatinvoice.business.EmailServiceImpl;
 import com.floatinvoice.common.EnquiryStatusEnum;
 import com.floatinvoice.common.IndustryTypeEnum;
 import com.floatinvoice.common.OrgType;
 import com.floatinvoice.common.ProductTypeEnum;
+import com.floatinvoice.common.RegistrationStatusEnum;
 import com.floatinvoice.common.UUIDGenerator;
 import com.floatinvoice.common.UserContext;
+import com.floatinvoice.common.Utility;
+import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.EnquiryFormMsg;
 import com.floatinvoice.messages.SupportDocDtls;
 
@@ -23,14 +28,21 @@ public class JdbcEnquiryDao implements EnquiryDao {
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	private NamedParameterJdbcTemplate ficoreJdbcTemplate;
+	private ProfileDao profileDao;
+	private RegistrationDao registrationDao;
+	private EmailService emailServiceImpl;
 	
 	public JdbcEnquiryDao(){
 		
 	}
 	
-	public JdbcEnquiryDao(DataSource dataSource, DataSource ficoreDataSource){
+	public JdbcEnquiryDao(DataSource dataSource, DataSource ficoreDataSource, ProfileDao profileDao, RegistrationDao registrationDao,
+			EmailService emailServiceImpl){
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		this.ficoreJdbcTemplate = new NamedParameterJdbcTemplate(ficoreDataSource);
+		this.profileDao = profileDao;
+		this.registrationDao = registrationDao;
+		this.emailServiceImpl = emailServiceImpl;
 	}
 
 
@@ -214,6 +226,46 @@ public class JdbcEnquiryDao implements EnquiryDao {
 		params.addValue("enquiryId", enquiryId);
 		return jdbcTemplate.update(sql, params);		
 		
+	}
+
+	@Override
+	public BaseMsg qualifyEnquiry(String refId, String email) {
+		BaseMsg resp = new BaseMsg();
+		int registrationStatus = -1;
+		if(profileDao.verifyTempUserProfileExists(email)){
+			registrationStatus = profileDao.findUserRegistrationStatus(email);
+			if(registrationStatus == RegistrationStatusEnum.TEMP.getCode()){
+				// Send email to register
+				emailServiceImpl.sendEmail("Float Invoice Registration Request", email, new StringBuffer(String.format("Please login to http://54.210.238.169:8080/floatinvoice/loginpage using the credentials in the email."
+						+ " Login Id is %s and Password is %s", email, Utility.passwdString(8))));
+			}else{
+				// Send email to inform registered client to login and fill application
+				emailServiceImpl.sendEmail("Float Invoice Loan Application Request", email, new StringBuffer(String.format("Please login to http://54.210.238.169:8080/floatinvoice/loginpage using the credentials in the email."
+						+ " Login Id is %s and Password is %s", email, Utility.passwdString(8))));
+			}
+			
+		}else{
+			resp = registrationDao.registerSignInInfo(email, "test123", "test123", RegistrationStatusEnum.TEMP.getCode());
+
+			// Send email to register
+			emailServiceImpl.sendEmail("Float Invoice Registration Request", email, new StringBuffer(String.format("Please login to http://54.210.238.169:8080/floatinvoice/loginpage using the credentials in the email."
+					+ " Login Id is %s and Password is %s", email, Utility.passwdString(8))));
+		
+		}
+		updateEnquiry(EnquiryStatusEnum.QUALIFIED.getCode(), refId);
+		return resp;
+	}
+
+	@Override
+	public BaseMsg rejectEnquiry(String refId, String email) {
+		BaseMsg resp = new BaseMsg();
+		if(!profileDao.verifyTempUserProfileExists(email)){
+			resp = registrationDao.registerSignInInfo(email, "test123", "test123", RegistrationStatusEnum.TEMP.getCode());
+		}
+		// Email client about rejected inquiry
+		emailServiceImpl.sendEmail("Float Invoice - Rejected Enquiry", email, new StringBuffer());
+		updateEnquiry(EnquiryStatusEnum.REJECTED.getCode(), refId);
+		return resp;
 	}
 
 
