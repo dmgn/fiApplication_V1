@@ -36,7 +36,9 @@
      <span >
        <h5 ng-style={color:'green'}>{{respMsg}}</h5>
        <h5 ng-style={color:'red'}>{{errRespMsg}}</h5>
+  
      </span>
+    
       <form name="userForm" style="margin-top: 5em;" ng-submit="submitForm()" novalidate>
         
           <md-input-container class="md-block" flex-gt-sm>
@@ -44,12 +46,12 @@
             <input type="email" name="email" ng-model="user.email" required>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Password</label>
+            <label>New Password</label>
             <input type="password" name="passwd"  ng-model="user.passwd" ng-minlength="3" required>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Confirm Password</label>
-            <input type="password" name="passwd"  ng-model="user.confirmPasswd" ng-minlength="3" required>
+            <label>Confirm New Password</label>
+            <input type="password" name="cnpasswd"  ng-model="user.confirmnPasswd" ng-minlength="3" required>
           </md-input-container>
           <div style="float:right">
             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || checkRespMsg()">Save</button>  
