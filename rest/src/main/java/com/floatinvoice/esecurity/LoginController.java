@@ -2,15 +2,18 @@ package com.floatinvoice.esecurity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.floatinvoice.business.ProfileService;
 import com.floatinvoice.common.OrgType;
 import com.floatinvoice.common.RegistrationStatusEnum;
@@ -140,12 +143,25 @@ public class LoginController {
     }
     
     @RequestMapping(value = "/usrLogin", method = RequestMethod.POST)
-    public ResponseEntity<BaseMsg> tmpUserLogin(@RequestBody LoginDtlsMsg loginDtlsMsg, HttpServletRequest request, HttpSession session) {
+    public Object tmpUserLogin(@RequestBody LoginDtlsMsg loginDtlsMsg, HttpServletRequest request, HttpSession session, ModelAndView model) {
     	String email = UserContext.getUserName();
+    	model.addObject("email", email);
+    	BaseMsg response = new BaseMsg();
     	if(profileService.verifyTempUserProfileExists(email)){
     		session.setAttribute("remote-user", email);
+    		int registrationStatus = profileService.findUserRegistrationStatus(email);
+    		if ( registrationStatus == RegistrationStatusEnum.LOGIN.getCode()){
+    			response.addInfoMsg("Registration step 2 pending", RegistrationStatusEnum.ORG.getCode());
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+    		}else if (  registrationStatus == RegistrationStatusEnum.ORG.getCode() ){
+    			response.addInfoMsg("Registration step 3 pending", RegistrationStatusEnum.USER.getCode());
+    		}else if (  registrationStatus == RegistrationStatusEnum.USER.getCode() ){
+    			response.addInfoMsg("Registration step 4 pending", RegistrationStatusEnum.DOCS.getCode());
+    		}    		
+    		
     	}// UserId and Password Validation
-        return new ResponseEntity<>(new BaseMsg(), HttpStatus.OK);
+    	response.addInfoMsg("Registration steps pending", RegistrationStatusEnum.TEMP.getCode());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     
