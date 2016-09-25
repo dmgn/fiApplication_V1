@@ -80,6 +80,18 @@ public class InvoiceDtlsMsg extends BaseMsg{
 	@XmlElement(name="isFraudTx")
 	private boolean isFraudTx;
 	
+	@XmlElement(name="agreementReady")
+	private boolean agreementReady;
+	
+	
+	public void setAgreementReady(boolean isAgreementReady) {
+		this.agreementReady = isAgreementReady;
+	}
+	
+	public boolean getAgreementReady() {
+		return agreementReady;
+	}
+
 	public double getInterestRate() {
 		return interestRate;
 	}
