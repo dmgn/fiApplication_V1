@@ -6,7 +6,7 @@
           $scope.enquiries = data.list;
           $scope.sortField = 'enqDate';
           $scope.refresh = function(refId){
-            console.log("REFRESH " + refId);
+           
           var index = -1;
           var invoiceList =  $scope.enquiries;
           for (var i=0; i<invoiceList.length; i++){
@@ -33,7 +33,45 @@
           });
         };
 
-        $scope.setupEnquiryAcct = function( enquiryRefId ){
+        $scope.qualifyEnquiry = function( item ){
+          $scope.enquiry = {};
+          $scope.enquiry.refId = item.refId;
+          $scope.enquiry.email = item.email;
+          $http({
+              method:'POST',
+              url:'/floatinvoice/qualify/enquiry',
+              data:$scope.enquiry,
+              xhrFields: {
+                  withCredentials: true
+              },
+              headers:{'Content-Type':'application/json'}
+              }).then(function successCallback(response) {
+                  $scope.refresh($scope.refId);
+                }, function errorCallback(response) {
+                  console.log(response);
+            });
+        }
+
+        $scope.rejectEnquiry = function( item ){
+          $scope.enquiry = {};
+          $scope.enquiry.refId = item.refId;
+          $scope.enquiry.email = item.email;
+          $http({
+              method:'POST',
+              url:'/floatinvoice/reject/enquiry',
+              data:$scope.enquiry,
+              xhrFields: {
+                  withCredentials: true
+              },
+              headers:{'Content-Type':'application/json'}
+              }).then(function successCallback(response) {
+                  $scope.refresh($scope.enquiry.refId);
+                }, function errorCallback(response) {
+                  console.log(response);
+            });
+        }
+
+/*        $scope.setupEnquiryAcct = function( enquiryRefId ){ 
           $scope.refId = enquiryRefId;
           ModalService.showModal({
             templateUrl: "html/enquiryAcctSetup.html",
@@ -51,7 +89,7 @@
 
           // modal.element.modal().hide();
           });
-        };
+        };*/
 
 
         });
