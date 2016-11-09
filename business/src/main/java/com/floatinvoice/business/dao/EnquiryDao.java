@@ -24,4 +24,7 @@ public interface EnquiryDao {
 	BaseMsg qualifyEnquiry(String refId, String email);
 	
 	BaseMsg rejectEnquiry(String refId, String email);
+	
+	int insertRecordInKYCApplicationList(String refId);
+	
 }
