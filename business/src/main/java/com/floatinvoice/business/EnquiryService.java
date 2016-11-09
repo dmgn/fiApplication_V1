@@ -28,4 +28,6 @@ public interface EnquiryService {
 	void mapEnquiryToOrgSetup(String enquiryRefId, int enquiryId, int orgId, int userId);
 	
 	EnquiryFormMsg viewStagedEnquiry(int enqStatus, String refId, String companyId);
+	
+	EnquiryFormMsg viewOneEnquiry(String refId);
 }
