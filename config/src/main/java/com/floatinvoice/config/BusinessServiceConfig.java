@@ -26,6 +26,10 @@ import com.floatinvoice.business.ProfileService;
 import com.floatinvoice.business.ProfileServiceImpl;
 import com.floatinvoice.business.RegistrationService;
 import com.floatinvoice.business.RegistrationServiceImpl;
+import com.floatinvoice.business.dao.EnquiryDao;
+import com.floatinvoice.business.dao.FIApplicationDao;
+import com.floatinvoice.business.dao.FIProductDao;
+import com.floatinvoice.business.dao.OrgReadDao;
 
 
 @Configuration
@@ -40,7 +44,7 @@ public class BusinessServiceConfig {
 	@Bean
 	public FIApplicationService fiAppService(){
 		return new FIApplicationServiceImpl(readServicesConfig.enquiryDao(), readServicesConfig.orgReadDao(), readServicesConfig.fiApplicationDao(),
-				readServicesConfig.productDao());
+				readServicesConfig.productDao(), registrationService(), bankService(), enquiryService());
 	}
 	
 	@Bean
