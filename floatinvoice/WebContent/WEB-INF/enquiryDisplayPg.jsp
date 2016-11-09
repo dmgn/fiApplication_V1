@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html ng-app="enquiryDisplayApp" >
 <head>
-
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <!-- CSS ===================== -->
     <!-- load bootstrap -->
      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.412/styles/kendo.common-material.min.css" />
   <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.412/styles/kendo.material.min.css" />
   <script src="//kendo.cdn.telerik.com/2016.1.412/js/kendo.all.min.js"></script>
+ 
 </head>
 <body>
 <div class="container">
