@@ -18,6 +18,7 @@
       background-color: #ffffff;
     }
 </style>
+<link rel="stylesheet" href="css/chatModal.css">
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/angular.min.js"></script>
@@ -31,11 +32,12 @@
   <script src="js/angular-route.min.js"></script>
   <script src="js/angular-modal-service.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-route-segment/1.4.0/angular-route-segment.min.js"></script>
+   <script src="http://54.210.238.169:7000/socket.io/socket.io.js"></script>
   <script src="js/appNbfcView.js"></script>
   <script src="js/nbfcEnquiryView.js"></script>
   <script src="js/nbfcHome.js"></script>
   <script src="js/modalcontroller.js"></script>
-
+  <script src="js/chat.js"></script>
   <script>
     nbfcApp.service('NbfcAcroNameService', function(){
       this.getAcronym = function(){
