@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.floatinvoice.business.FIApplicationService;
+import com.floatinvoice.business.RegistrationService;
 import com.floatinvoice.messages.AppDtlsMsg;
 import com.floatinvoice.messages.BaseMsg;
 import com.floatinvoice.messages.ListMsg;
@@ -19,6 +20,14 @@ public class FIApplicationController {
 
 	@Autowired
 	FIApplicationService fiApplicationService;
+	
+	
+	
+	@RequestMapping(value = { "/viewKYCApp"}, method = RequestMethod.GET)
+	public  ResponseEntity<AppDtlsMsg> viewKYCApplication(@RequestParam(value="refId", required=true) String refId,
+			@RequestParam(value="acro", required=true) String acro){
+		return null;
+	}
 	
 	@RequestMapping(value = { "/saveApp"}, method = RequestMethod.POST)
 	public  ResponseEntity<BaseMsg> saveApplication( @RequestBody AppDtlsMsg appDetails ){
