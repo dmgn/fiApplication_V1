@@ -13,8 +13,10 @@
 </style>
 
 
-    
-    <div class="row">       
+    <p style="float:right">
+              <a href="" ng-click="displayChatWindow()">Start a conversation</a>
+    </p>
+    <div class="row" style="padding-top: 2em;">       
         <ul class="nav nav-tabs nav-justified" ng-controller="ManageEnquiryCtrl">
           <li ng-class="adtabClass(adtab, 'justified')" ng-repeat="adtab in adtabs" tab="adtab"><a href="{{adtab.link}}" ng-click="adsetSelectedTab(adtab, 'justified')">{{adtab.label}}</a></li>
 
