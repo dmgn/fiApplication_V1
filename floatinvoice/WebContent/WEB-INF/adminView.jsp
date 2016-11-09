@@ -18,6 +18,7 @@
       background-color: #ffffff;
     }
 </style>
+<link rel="stylesheet" href="css/chatModal.css">
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/angular.min.js"></script>
@@ -41,8 +42,9 @@
   <script src="js/enquiryViewModalCtrl.js"></script>
   <script src="js/enquiryAcctSetupModal.js"></script>
   <script src="js/stagedEnquiryUpdate.js"></script>
-
-
+<script src="js/stagedEnquiryUpdate.js"></script>
+ <script src="http://54.210.238.169:7000/socket.io/socket.io.js"></script>
+  <script src="js/chat.js"></script>
   <script>
     adminfloatInvoiceListApp.service('AdminAcroNameService', function(){
       this.getAcronym = function(){
