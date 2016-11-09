@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.floatinvoice.business.EmailService;
-import com.floatinvoice.business.EmailServiceImpl;
 import com.floatinvoice.common.EnquiryStatusEnum;
 import com.floatinvoice.common.IndustryTypeEnum;
 import com.floatinvoice.common.OrgType;
@@ -155,6 +154,29 @@ public class JdbcEnquiryDao implements EnquiryDao {
 	}
 
 	@Override
+	public int insertRecordInKYCApplicationList(String refId) {
+		
+		final String sqlEnquiry = "SELECT ENQUIRY_ID  FROM ENQUIRY_INFO EI WHERE EI.REF_ID = :refId ";
+		
+		int rowsUpdated = 0;
+		final String sql = "INSERT INTO KYC_APPLICATIONS "
+				+ "(PRODUCT_ID, ENQUIRY_ID, COMPANY_ID, FINANCIER_ID, UPDATE_BY, APPLICATION_DT, REF_ID, REQ_ID, SOURCE) VALUES "
+				+ "(:productId, :enquiryId, :companyId, :financierId, :updateBy, :applicationDt, :refId, :reqId, :source) ";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("productId", 0);
+		paramMap.addValue("enquiryId", System.currentTimeMillis());
+		paramMap.addValue("companyId", System.currentTimeMillis());
+		paramMap.addValue("financierId", 0);
+		paramMap.addValue("updateBy", UserContext.getUserName());
+		paramMap.addValue("applicationDt", System.currentTimeMillis());
+		paramMap.addValue("refId", UUIDGenerator.newRefId());
+		paramMap.addValue("reqId", UserContext.getRequestId());
+		paramMap.addValue("source", 0);
+		rowsUpdated = ficoreJdbcTemplate.update(sql, paramMap);
+		return rowsUpdated;
+	}
+	
+	@Override
 	public EnquiryFormMsg findOneEnquiry(String refId) {
 		final String sql = "SELECT EI.ENQUIRY_ID, EI.REF_ID, "
 							+ " EI.CONTACT_NAME, EI.EMAIL, EI.PHONE, EI.YRS_IN_BUSINESS, "
@@ -253,6 +275,7 @@ public class JdbcEnquiryDao implements EnquiryDao {
 		
 		}
 		updateEnquiry(EnquiryStatusEnum.QUALIFIED.getCode(), refId);
+		
 		return resp;
 	}
 
@@ -267,6 +290,5 @@ public class JdbcEnquiryDao implements EnquiryDao {
 		updateEnquiry(EnquiryStatusEnum.REJECTED.getCode(), refId);
 		return resp;
 	}
-
 
 }
