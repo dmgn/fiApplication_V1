@@ -1,0 +1,215 @@
+<style>
+	h4   {background-color: #337ab7; color: #fff;    font-family: sans-serif;}
+	h5   {background-color: #f1f1f1;}
+	
+</style>
+<div ng-controller="KYCApplicationCtrl">
+  <!-- <table class="table table-striped">
+    <tr>
+      <th></th>
+      <th><a href="" ng-click="sortField = ''">Application Id #</th>
+      <th><a href="" ng-click="sortField = ''">Application Date</th>
+      <th><a href="" ng-click="sortField = ''">Enquiry Id</th>
+      <th><a href="" ng-click="sortField = ''">Financier</th>
+      <th><a href="" ng-click="sortField = ''">Status</th>
+      <th><a href="" ng-click="sortField = ''">Action</th>
+    </tr>
+
+  </table> -->
+ <md-content layout-padding>
+ 	<form name="kycForm"  novalidate>
+ 		<div> <h4> Company's Info</h4> </div><br>
+        <div layout-gt-xs="row"> 
+		   <md-input-container class="md-block" flex-gt-sm>
+	       <label>Registered Name</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	      </md-input-container>
+	      <md-input-container class="md-block" flex-gt-sm>
+	       <label>Website</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	      </md-input-container>
+	    </div>
+	    <div layout-gt-xs="row"> 
+	      <md-input-container class="md-block" flex-gt-sm>
+	       <label>Managing Director/CEO</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	      </md-input-container>
+		   <md-input-container class="md-block" flex-gt-sm>
+	       <label>Contact No.</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	      </md-input-container>
+	      <md-input-container class="md-block" flex-gt-sm>
+	       <label>Email Address</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	      </md-input-container>
+	    </div>
+	   	<div layout-gt-xs="row"> 
+	      <md-input-container class="md-block" flex-gt-sm>
+	       <label>Contact Person Name</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	      </md-input-container>
+		  <md-input-container class="md-block" flex-gt-sm>
+	       <label>Contact No.</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	      </md-input-container>
+	      <md-input-container class="md-block" flex-gt-sm>
+	       <label>Email Address</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	      </md-input-container>
+	    </div>
+	    <div> <h4> Address</h4> </div><br>
+	    <div> <h5> Registered Office</h5> </div><br>
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Street</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>City</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Country</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+	   	<div> <h5> Corporate Office</h5> </div><br>
+	   	<div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Street</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>City</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Country</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>PO Box</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>Telephone</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    </div>
+	     <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Fax</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Email</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+	    <div> <h4> Trade License</h4> </div><br>
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Date of Incorporation</label>
+	       <md-datepicker ng-model="user.submissionDate"></md-datepicker>
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>Trade License No.</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    </div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>License Expiry Date</label>
+				<md-datepicker ng-model="user.submissionDate"></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Licensing Authority</label>
+				<input type="text" name="regCompName" ng-model="user.regCompName">
+			</md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+		<md-input-container class="md-block" flex-gt-sm>
+				<label>Trade Activities (as per license)</label>
+				<textarea ng-model="user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+			</md-input-container>
+			
+		</div>
+
+		<div> <h4> Corporate Info</h4> </div><br>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Legal Status</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Paid up Share Capital (US$)</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Shareholding Structure</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>List of Directors</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Key Bankers</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Statutory Auditors</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Number of Employees</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Branches & Warehouses (if any)</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Parent & Affiliated Companies</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div> <h4> Bank Info</h4> </div><br>
+		<div layout-gt-xs="row">
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank's Name</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank Account No.</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row">
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank Address</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row">
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Swift</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Routing No.</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+ 	</form>
+ </md-content layout-padding>
+
+
+</div>
