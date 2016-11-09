@@ -7,6 +7,7 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
     when('/reports','s3').
     when('/loans','s2').
     when('/profile','s4').
+    when('/applications','s5').
     when('/s1/upload','s1.upload').
     when('/s1/unpaid','s1.unpaid').
     when('/s1/pending','s1.pending').
@@ -42,7 +43,12 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
         templateUrl: '/floatinvoice/html/profile.html',
         controller: 'ProfileTabsCtrl'
     });
-
+    
+    $routeSegmentProvider
+    .segment('s5', {
+        templateUrl: '/floatinvoice/html/kycApplications.html',
+        controller: 'KYCApplicationCtrl'
+    });
 /*   $routeSegmentProvider
       .within('s1')
       .segment('upload', {
