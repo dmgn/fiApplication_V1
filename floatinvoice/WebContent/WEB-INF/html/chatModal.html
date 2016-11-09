@@ -1,0 +1,51 @@
+<div class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Chat</h4>
+      </div>
+      
+      <div class="modal-body" style="padding-top: 1em;">
+          <div class="container" >
+              <div class='rows'>   
+                    <div class="col-xs-6">
+                        <!-- showing messages -->
+                        <div class="chatbox" id="chatbox">
+                            <p  ng-style="{
+                                       'display': is_msg_show==true ? 'block' :'none' 
+                                    }">
+                              <!-- <span class='sender'><strong>{{ msgs.name }} </strong>says:</span><br/>
+                              <span class='sender_msg'>{{ msgs.msg }}</span> -->
+                              <ul id="messages"></ul>    
+                            </p>
+                        </div>  
+                        <br/>  
+                        <div id="name-group" class="form-group">
+                            <textarea class="form-control msg_box" id="msg_box" ng-model='msg_text' ng-keypress="send_msg($event)" placeholder="Type here and check the Title in Tab"></textarea>
+                            <input type='text' style='display:none' ng-model='selected_id' />
+                        </div>
+                    </div> 
+                    <div class="col-xs-3">
+                          <ul class="user">
+                              <!-- appending username  -->
+                              <li class="" ng-repeat="user_list in user_show" ng-style="{
+                                            'background': clicked==user_list.id ?  '#d2d2d2' :'#e2e2e2',
+                                            'cursor': my_id==user_list.id ?  'not-allowed' :'pointer'
+                                        }" ng-click="clicked_highlight(user_list.id)">
+                                  <span id='{{user_list.id}}' >{{ user_list.user_name }}</span>
+                                  <span class="" ng-style="{
+                                            'display': my_id==user_list.id ? 'block' :'none' 
+                                        }">You</span>
+                              </li>
+                          </ul>             
+                   </div> 
+              </div>
+        </div>                 
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="cancel()" class="btn btn-primary">Close</button>
+      </div>
+    
+  </div>
+</div>
