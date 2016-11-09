@@ -161,4 +161,9 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return enqDao.rejectEnquiry(refId, email);
 	}
 
+	@Override
+	public EnquiryFormMsg viewOneEnquiry(String refId) {
+		return enqDao.findOneEnquiry(refId);
+	}
+
 }
