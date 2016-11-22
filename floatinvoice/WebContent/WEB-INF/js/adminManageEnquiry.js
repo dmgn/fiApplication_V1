@@ -3,14 +3,19 @@
   '$http','$scope', '$element', 'input', 'close', 
   function($http, $scope, $element, input, close) {
 
-
-  $scope.cancel = function() {    
+   $scope.close = function() {
+      $element.modal('hide');  
+      close(200); // close, but give 500ms for bootstrap to animate
+    //console.log('Close method in modal ended');
+    };
+  $scope.cancel = function() {  
+  console.log("Hitting cancel");  
     $element.modal('hide');
 
   };
 
    var user_name=window.prompt('Enter Your Name'); 
-    var socket = io("http://54.210.238.169:7000");
+    var socket = io("http://localhost:7000");
     $scope.clicked=null;
     $scope.selected_id=null;
     $scope.msgs=null;
@@ -90,6 +95,7 @@
             console.log(modal);
             modal.element.modal();
             modal.close.then(function(result) {
+              console.log("result object" +result);
               //$scope.complexResult  = "Name: " + result.name + ", age: " + result.age;
             });
           });
