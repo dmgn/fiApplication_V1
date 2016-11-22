@@ -5,8 +5,8 @@
 				<label style="padding-top: 2em;"> Buyer {{$index + 1}}</label>      
 				 <div layout-gt-xs="row" style="float:right; padding-top: 1em;">
 					<span>
-						<button  class="btn label label-warning" ng-click="removeChoice($index)">Remove Buyer</button>
-						<button  class="btn btn-primary label" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button><br/>
+<!-- 						<button  class="btn label label-warning" ng-click="removeChoice($index)">Remove Buyer</button>
+ -->				<button  class="btn btn-primary label" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">					Edit</button><br/>
 					</span>
 				</div> 
 				<form editable-form name="editableForm" onaftersave="saveUser(debtors.list[$index], $index)">
@@ -80,8 +80,6 @@
 	   	   	<button class="btn label label-info" ng-click="addNewChoice()">Add Buyer</button>
 	   	   </div>  -->
 		</div>		
-		<div id="choicesDisplay">
-			{{ debtors.list[0] }}
-		</div>
+
 </div>
 

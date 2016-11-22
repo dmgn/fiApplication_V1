@@ -1,0 +1,85 @@
+<div >
+		<div ng-controller="kycBuyerController">
+		   <fieldset  data-ng-repeat="debtor in debtors.list track by $index" ng-model='debtors.list[$index]'>
+	<!-- http://www.shanidkv.com/blog/angularjs-adding-form-fields-dynamically -->	      
+				<div style="float:right; padding-top: 1em;">
+					<button  class="btn label label-warning" ng-click="removeChoice($index)">Remove Buyer</button><br/>
+				</div>
+
+				<div layout-gt-xs="row"> 
+				  <!-- <md-input-container class="md-block" flex-gt-sm>
+			       <label>Debtor Name</label>
+			       <input type="text" name="compName" ng-model="debtors.list[$index].compName"> 
+			      </md-input-container>
+
+			      <md-input-container class="md-block" flex-gt-sm>
+				    <label>City</label>
+				    <input type="text" name="city" ng-model="debtors.list[$index].city">
+				  </md-input-container>
+			    
+			      <md-input-container class="md-block" flex-gt-sm>
+			       <label>Country</label>
+			       <input type="text" name="country" ng-model="debtors.list[$index].country">
+			      </md-input-container> -->
+ 				  <md-input-container class="md-block" flex-gt-sm>
+				      <span class="title">User name: </span>
+	      				<a href="#" editable-text="debtors.list[$index].compName" e-name="compName" onbeforesave="checkName($data)">{{ debtors.list[$index].compName || 'empty' }}
+	      			  </a>
+      			  </md-input-container>
+ 				  <md-input-container class="md-block" flex-gt-sm>
+	      			  <label>City</label>      			   
+	      				<a href="#" editable-text="debtors.list[$index].city" e-ng-model="debtors.list[$index].city" e-name="city" e-required>{{ debtors.list[$index].city || 'empty' }}
+	      			  </a>
+ 				  </md-input-container>
+      			   <md-input-container class="md-block" flex-gt-sm>
+	      			   
+	      				<a href="#" editable-text="debtors.list[$index].country" e-ng-model="debtors.list[$index].country" e-name="country" e-placeholder="Country" e-required>{{ debtors.list[$index].country || 'empty' }}
+	      			  </a>
+   					</md-input-container>
+			    </div>
+			    <!-- <div layout-gt-xs="row">
+				    <md-input-container class="md-block" flex-gt-sm>
+					   <label>Telephone</label>
+					   <input type="text" name="phone" ng-model="debtors.list[$index].phone">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+					   <label>Fax</label>
+					   <input type="text" name="fax" ng-model="debtors.list[$index].fax">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+					   <label>Register Number</label>
+					   <input type="text" name="regNumber" ng-model="debtors.list[$index].regNumber">
+					</md-input-container>					
+				</div>
+				<div layout-gt-xs="row">
+				    <md-input-container class="md-block" flex-gt-sm>
+					   <label>Website</label>
+					   <input type="text" name="website" ng-model="debtors.list[$index].website">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+					   <label>E-mail</label>
+					   <input type="text" name="email" ng-model="debtors.list[$index].email">
+					</md-input-container>				
+				</div>
+				<div layout-gt-xs="row">
+				    <md-input-container class="md-block" flex-gt-sm>
+					   <label>Contact Person</label>
+					   <input type="text" name="contactPerson" ng-model="debtors.list[$index].contactPerson">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+					   <label>Requested Limit</label>
+					   <input type="text" name="reqLimit" ng-model="debtors.list[$index].reqLimit">
+					</md-input-container>				
+				</div> -->
+		      
+
+		   </fieldset>
+
+		   		<button class="btn label label-info" ng-click="addNewChoice()">Add Buyer</button>
+
+		</div>		
+		<div id="choicesDisplay">
+			{{ debtors.list }}
+		</div>
+</div>
+

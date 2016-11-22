@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.504/styles/kendo.default.min.css" />
 <!--     <link rel="stylesheet" href="css/bootstrap.min.css" />
  -->
+ <link rel="stylesheet" href="css/xeditable.min.css">
  <style>
     table, th , td  {
       /*border: 1px solid grey;*/
@@ -52,11 +53,13 @@
   <script src="js/profile.js"></script>
   <script src="js/uploadNew.js"></script>
   <!-- script src="js/supportingDoc.js"></script -->
+
   <script src="js/appAdminView.js"></script>
   <script src="js/appNbfcView.js"></script>
   <script src="js/editInvoiceDtls.js"></script>
   <script src="js/rejectedInvoices.js"></script>
   <script src="js/invoicePoolDtlsModalCtrl.js"></script>
+  <script src="js/xeditable.min.js"></script>
   <script src="js/kycRouterApp.js"></script>
   <script src="js/kycApplication.js"></script>
   <script src="js/kycBuyerList.js"></script>

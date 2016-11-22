@@ -1,6 +1,6 @@
 var floatInvoiceListApp = angular.module('floatInvoiceListApp',
   ['angularUtils.directives.dirPagination','ngRoute', 'route-segment', 'view-segment', 'angularModalService',
-  'ngMaterial', 'ngMessages','kendo.directives']);
+  'ngMaterial', 'ngMessages','kendo.directives', 'xeditable']);
 floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSegmentProvider) {
     $routeSegmentProvider.
     when('/homePg','s1').
@@ -74,7 +74,7 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
    $routeSegmentProvider
       .within('s5')
       .segment('docs', {
-        templateUrl:'/floatinvoice/html/kycDocments.html',
+        templateUrl:'/floatinvoice/html/kycDocuments.html',
         controller:'kycDocmentsController'
     });
 
