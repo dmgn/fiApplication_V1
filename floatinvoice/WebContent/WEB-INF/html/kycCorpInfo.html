@@ -1,0 +1,54 @@
+ <style>
+	h4   {background-color: #337ab7; color: #fff;    font-family: sans-serif;}
+	h5   {background-color: #f1f1f1;}
+	
+</style>
+<div ng-controller="KYCCorpInfoCtrl"> 	
+ <md-content layout-padding>
+ 	<form name="kycCorpInfoForm"  novalidate>	
+		<div> <h4> Corporate Info</h4> </div><br>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Legal Status</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Paid up Share Capital (US$)</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Shareholding Structure</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>List of Directors</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Key Bankers</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Statutory Auditors</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Number of Employees</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Branches & Warehouses (if any)</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Parent & Affiliated Companies</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+ 	</form>
+ </md-content layout-padding>	    
+</div>
