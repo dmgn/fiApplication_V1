@@ -11,7 +11,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.jdk.version>1.7</java.jdk.version>
 		<springframework.version>4.1.1.RELEASE</springframework.version>
-		<hibernate.version>4.3.6.Final</hibernate.version>
 		<!--<mysql.version>5.6.22</mysql.version>  -->
 		<com.fasterxml.jackson.core.version>2.6.3</com.fasterxml.jackson.core.version>
 	    <hibernate.version>4.3.6.Final</hibernate.version>   
