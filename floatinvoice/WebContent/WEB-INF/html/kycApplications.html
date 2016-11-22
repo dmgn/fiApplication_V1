@@ -22,11 +22,11 @@
         <div layout-gt-xs="row"> 
 		   <md-input-container class="md-block" flex-gt-sm>
 	       <label>Registered Name</label>
-	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	       <input type="text" name="regCompName" ng-model="application.compInfo.regCompName">
 	      </md-input-container>
 	      <md-input-container class="md-block" flex-gt-sm>
 	       <label>Website</label>
-	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	       <input type="text" name="regCompName" ng-model="application.compInfo.regCompName">
 	      </md-input-container>
 	    </div>
 	    <div layout-gt-xs="row"> 
@@ -46,15 +46,15 @@
 	   	<div layout-gt-xs="row"> 
 	      <md-input-container class="md-block" flex-gt-sm>
 	       <label>Contact Person Name</label>
-	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	       <input type="text" name="acronym"  ng-model="application.compInfo.contactPersonName" ng-minlength="3" >
 	      </md-input-container>
 		  <md-input-container class="md-block" flex-gt-sm>
 	       <label>Contact No.</label>
-	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	       <input type="text" name="regCompName" ng-model="application.compInfo.contactPersonContactNo">
 	      </md-input-container>
 	      <md-input-container class="md-block" flex-gt-sm>
 	       <label>Email Address</label>
-	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	       <input type="text" name="acronym"  ng-model="application.compInfo.contactPersonEmail" ng-minlength="3" >
 	      </md-input-container>
 	    </div>
 	    <div> <h4> Address</h4> </div><br>
@@ -62,11 +62,11 @@
 	    <div layout-gt-xs="row"> 
 	    <md-input-container class="md-block" flex-gt-sm>
 	       <label>Street</label>
-	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	       <input type="text" name="acronym"  ng-model="application.compInfo.regOffice.street" ng-minlength="3" >
 	    </md-input-container>
 		<md-input-container class="md-block" flex-gt-sm>
 	       <label>City</label>
-	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	       <input type="text" name="regCompName" ng-model="application.compInfo.regOffice.city">
 	    </md-input-container>
 	    <md-input-container class="md-block" flex-gt-sm>
 	       <label>Country</label>
