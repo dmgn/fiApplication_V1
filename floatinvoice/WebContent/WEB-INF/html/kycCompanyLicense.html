@@ -1,0 +1,40 @@
+<style>
+	h4   {background-color: #337ab7; color: #fff;    font-family: sans-serif;}
+	h5   {background-color: #f1f1f1;}
+	
+</style>
+<div ng-controller="KYCCompanyLicenseCtrl"> 	
+ <md-content layout-padding>
+ 	<form name="kycCompanyLicenseForm"  novalidate>	
+
+  <div> <h4> Trade License</h4> </div><br>
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Date of Incorporation</label>
+	       <md-datepicker ng-model="user.submissionDate"></md-datepicker>
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>Trade License No.</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    </div>
+		<div layout-gt-xs="row"> 
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>License Expiry Date</label>
+				<md-datepicker ng-model="user.submissionDate"></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Licensing Authority</label>
+				<input type="text" name="regCompName" ng-model="user.regCompName">
+			</md-input-container>
+		</div>
+		<div layout-gt-xs="row"> 
+		<md-input-container class="md-block" flex-gt-sm>
+				<label>Trade Activities (as per license)</label>
+				<textarea ng-model="user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+			</md-input-container>
+			
+		</div>
+		 </form>
+ </md-content layout-padding>	    
+</div>
