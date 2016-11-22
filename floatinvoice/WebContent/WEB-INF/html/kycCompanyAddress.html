@@ -1,0 +1,63 @@
+<style>
+	h4   {background-color: #337ab7; color: #fff;    font-family: sans-serif;}
+	h5   {background-color: #f1f1f1;}
+	
+</style>
+<div ng-controller="KYCCompanyAddressCtrl"> 	
+ <md-content layout-padding>
+ 	<form name="kycAddressForm"  novalidate>	
+ 		<div> <h4> Address</h4> </div><br>
+	    <div> <h5> Registered Office</h5> </div><br>
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Street</label>
+	       <input type="text" name="acronym"  ng-model="application.compInfo.regOffice.street" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>City</label>
+	       <input type="text" name="regCompName" ng-model="application.compInfo.regOffice.city">
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Country</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+	   	<div> <h5> Corporate Office</h5> </div><br>
+	   	<div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Street</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>City</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Country</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+
+	    <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>PO Box</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+	       <label>Telephone</label>
+	       <input type="text" name="regCompName" ng-model="user.regCompName">
+	    </md-input-container>
+	    </div>
+	     <div layout-gt-xs="row"> 
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Fax</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    <md-input-container class="md-block" flex-gt-sm>
+	       <label>Email</label>
+	       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+	    </md-input-container>
+	    </div>
+	    </form>
+ </md-content layout-padding>	    
+</div>
