@@ -1,0 +1,52 @@
+<style>
+	h4   {background-color: #337ab7; color: #fff;    font-family: sans-serif;}
+	h5   {background-color: #f1f1f1;}
+	
+</style>
+<div ng-controller="KYCBankInfoCtrl">
+  <!-- <table class="table table-striped">
+    <tr>
+      <th></th>
+      <th><a href="" ng-click="sortField = ''">Application Id #</th>
+      <th><a href="" ng-click="sortField = ''">Application Date</th>
+      <th><a href="" ng-click="sortField = ''">Enquiry Id</th>
+      <th><a href="" ng-click="sortField = ''">Financier</th>
+      <th><a href="" ng-click="sortField = ''">Status</th>
+      <th><a href="" ng-click="sortField = ''">Action</th>
+    </tr>
+
+  </table> -->
+ <md-content layout-padding>
+ 	<form name="kycBankInfoForm"  novalidate>		
+		<div> <h4> Bank Info</h4> </div><br>
+		<div layout-gt-xs="row">
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank's Name</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank Account No.</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row">
+		   	<md-input-container class="md-block" flex-gt-sm>
+		       <label>Bank Address</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		<div layout-gt-xs="row">
+			<md-input-container class="md-block" flex-gt-sm>
+		       <label>Swift</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		       <label>Routing No.</label>
+		       <input type="text" name="acronym"  ng-model="user.acronym" ng-minlength="3" >
+		    </md-input-container>
+		</div>
+		</form>
+ </md-content layout-padding>
+
+
+</div>
