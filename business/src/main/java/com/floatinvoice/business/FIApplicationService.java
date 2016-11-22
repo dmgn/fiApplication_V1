@@ -15,7 +15,7 @@ public interface FIApplicationService {
 	AppDtlsMsg viewOneApplication(String refId);
 	BaseMsg saveApplication( AppDtlsMsg appDetails );
 	BaseMsg editApplication( AppDtlsMsg appDetails );
-	KYCDtlsMsg viewOneKYCApplication(String acro, String regId);
+	KYCDtlsMsg viewOneKYCApplication(String acro, String refId);
 	BaseMsg saveBuyerDetails( BuyerDtlsMsg buyerDtls );
 	ListMsg<BuyerDtlsMsg> viewBuyerDetails(String acronym, String appRefId);
 }
