@@ -261,7 +261,7 @@ public class JdbcRegistrationDao implements RegistrationDao {
 	@Override
 	public RegistrationStep2CorpDtlsMsg fetchOrgInfo(String acronym) {
 		final String sql = " SELECT OI.ACRONYM, OI.COMPANY_NAME, OI.ORG_TYPE, OA.STREET, OA.CITY, OA.STATE, OA.ZIP_CODE,"
-				+ " OA.COUNTRY, OCI.PHONE "
+				+ " OA.COUNTRY, OCI.PHONE_NO "
 				+ " FROM ORGANIZATION_INFO OI "
 				+ " JOIN ORGANIZATION_ADDRESS OA "
 				+ " ON OI.COMPANY_ID = OA.COMPANY_ID "
@@ -287,7 +287,7 @@ public class JdbcRegistrationDao implements RegistrationDao {
 			result.setCity(rs.getString("CITY"));
 			result.setState(rs.getString("STATE"));
 			result.setZipCode(rs.getString("ZIP_CODE"));
-			result.setPhoneNo(rs.getString("PHONE"));
+			result.setPhoneNo(rs.getString("PHONE_NO"));
 			return result;
 		}
 		
