@@ -1,13 +1,23 @@
 
   angular.module('floatInvoiceListApp')
-     .controller('KYCApplicationCtrl', ['$scope', '$http','fiService', function ($scope, $http, fiService){
+  	 .controller('kycBuyerController', ['$scope', '$http', '$routeParams', 'fiService', function ($scope, $http, $routeParams, fiService){}])
+  	 .controller('kycAcctReceivableController', ['$scope', '$http', '$routeParams', 'fiService', function ($scope, $http, $routeParams, fiService){}])
+  	 .controller('kycDocmentsController', ['$scope', '$http', '$routeParams', 'fiService', function ($scope, $http, $routeParams, fiService){}])
+     .controller('KYCApplicationCtrl', ['$scope', '$http', '$routeParams', 'fiService', function ($scope, $http, $routeParams, fiService){
      	var acro = fiService.getAcronym();  
      	$scope.user={};
-     	$scope.user.regCompName='TESTACRO';
-	  /*  $http.get('/floatinvoice/invoice/bids/offer?acro='+acro).success(function(data){
-	    console.log(data.list);
-		$scope.invoices = data.list;
-        $scope.sortField = 'loanId';
+     	//$scope.user.regCompName='TESTACRO';
+	    /*$http.get('/floatinvoice/viewKYCApp?refId=F881C61808764D9087653B0D5AA0B0E8&acro=DTCC').success(function(data){
+		    console.log(data);
+			$scope.application = {};
+			$scope.application.compInfo.regCompName = data.regCompName;
+			$scope.application.compInfo.website = data.regCompName;
+			$scope.application.compInfo.contactPersonName = data.contactPersonName;
+			$scope.application.compInfo.contactPersonContactNo = data.contactPersonContactNo;
+			$scope.application.compInfo.contactPersonEmail = data.contactPersonEmail;
+			$scope.application.compInfo.regOffice.street = data.regOffice.street;
+			$scope.application.compInfo.regOffice.city = data.regOffice.city;
+			//$scope.application.compInfo.regOffice.country 
 	    });*/
         /*$scope.application = {};
         $scope.application.compInfo.regCompName = 'TESTACRO';
