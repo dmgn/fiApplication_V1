@@ -17,9 +17,12 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
     when('/s1/delinquent','s1.delinquent').
     when('/s4/dashbd','s4.dashbd').
     when('/s4/compInfo','s4.compInfo').
-    when('/s4/directorInfo','s4.directorInfo');
+    when('/s4/directorInfo','s4.directorInfo').
     //when('/s4/funded','s4.funded');
-
+    when('/s5/kyc','s5.kyc').
+    when('/s5/buyerList','s5.buyerList').
+    when('/s5/acctReceivable','s5.acctReceivable').
+    when('/s5/docs','s5.docs');
     $routeSegmentProvider
     .segment('s1', {
         templateUrl: '/floatinvoice/html/homePage.html',
@@ -46,9 +49,35 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
     
     $routeSegmentProvider
     .segment('s5', {
-        templateUrl: '/floatinvoice/html/kycApplications.html',
-        controller: 'KYCApplicationCtrl'
+        templateUrl: '/floatinvoice/html/kycApplicationRouter.html',
+        controller: 'KYCAppRouterCtrl'
     });
+
+   $routeSegmentProvider
+      .within('s5')
+      .segment('kyc', {
+        templateUrl:'/floatinvoice/html/kycApplications.html',
+        controller:'KYCApplicationCtrl'
+    });
+    $routeSegmentProvider
+      .within('s5')
+      .segment('buyerList', {
+        templateUrl:'/floatinvoice/html/kycBuyerList.html',
+        controller:'kycBuyerController'
+    });
+    $routeSegmentProvider
+      .within('s5')
+      .segment('acctReceivable', {
+        templateUrl:'/floatinvoice/html/kycAcctReceivable.html',
+        controller:'kycAcctReceivableController'
+    });
+   $routeSegmentProvider
+      .within('s5')
+      .segment('docs', {
+        templateUrl:'/floatinvoice/html/kycDocments.html',
+        controller:'kycDocmentsController'
+    });
+
 /*   $routeSegmentProvider
       .within('s1')
       .segment('upload', {
