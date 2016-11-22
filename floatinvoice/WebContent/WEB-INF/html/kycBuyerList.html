@@ -1,0 +1,87 @@
+<div >
+		<div ng-controller="kycBuyerController">
+		   <fieldset  data-ng-repeat="debtor in debtors.list track by $index" ng-model='debtors.list[$index]'>
+	<!-- http://www.shanidkv.com/blog/angularjs-adding-form-fields-dynamically -->	
+				<label style="padding-top: 2em;"> Buyer {{$index + 1}}</label>      
+				 <div layout-gt-xs="row" style="float:right; padding-top: 1em;">
+					<span>
+						<button  class="btn label label-warning" ng-click="removeChoice($index)">Remove Buyer</button>
+						<button  class="btn btn-primary label" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button><br/>
+					</span>
+				</div> 
+				<form editable-form name="editableForm" onaftersave="saveUser(debtors.list[$index], $index)">
+				<div layout-gt-xs="row"> 				 
+ 				  <md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+				      	<!-- <label>Company Name</label>  -->  
+	      				<div editable-text="debtors.list[$index].compName" e-ng-model="debtors.list[$index].compName" e-name="compName" e-required e-placeholder="Company Name" edit-disabled=true>{{debtors.list[$index].compName}}
+	      			  	</div>
+      			  </md-input-container>
+      			   <md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+					   <div editable-text="debtors.list[$index].website" e-ng-model="debtors.list[$index].website" e-name="website" e-required e-placeholder="Website">{{debtors.list[$index].website || 'Website'}} 
+	      			  </div>
+					</md-input-container>
+				</div>
+				<div layout-gt-xs="row">
+ 				  <md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>	      			        			   
+	      				<div editable-text="debtors.list[$index].city" e-ng-model="debtors.list[$index].city" e-name="city" e-required e-placeholder="City">{{debtors.list[$index].city || 'City'}}
+	      			  </div>
+ 				  </md-input-container>
+      			   <md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+	      				<div editable-text="debtors.list[$index].country" e-ng-model="debtors.list[$index].country" e-name="country" e-required e-placeholder="Country">{{debtors.list[$index].country || 'Country'}}
+	      			  </div>
+   					</md-input-container>
+			    </div>
+
+				<div layout-gt-xs="row">
+				    <md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+					   <div editable-text="debtors.list[$index].phone" e-ng-model="debtors.list[$index].phone" e-name="phone" e-required e-placeholder="Telephone">{{debtors.list[$index].phone || 'Telephone'}}
+	      			   </div>
+					</md-input-container>
+					<md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+					   <div editable-text="debtors.list[$index].fax" e-ng-model="debtors.list[$index].fax" e-name="fax" e-required e-placeholder="Fax">{{debtors.list[$index].fax || 'Fax'}}
+	      			  </div>
+	      			</md-input-container>
+					<md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+					   <div editable-text="debtors.list[$index].regNumber" e-ng-model="debtors.list[$index].regNumber" e-name="regNumber" e-required e-placeholder="Register Number">{{debtors.list[$index].regNumber || 'Register Number'}}
+	      			  </div>
+					</md-input-container>					
+				</div>
+				<div layout-gt-xs="row">
+				   
+					<md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+ 					   <div editable-text="debtors.list[$index].email" e-ng-model="debtors.list[$index].email" e-name="email" e-required e-placeholder="E-mail">{{debtors.list[$index].email || 'E-mail'}}
+	      			  </div>					   
+					</md-input-container>	
+					<md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+					   <div editable-text="debtors.list[$index].contactPerson" e-ng-model="debtors.list[$index].contactPerson" e-name="contactPerson" e-required e-placeholder="Contact Person"> {{debtors.list[$index].contactPerson || 'Contact Person'}}
+	      			  </div>						   
+					</md-input-container>			
+				</div>
+				<div layout-gt-xs="row">
+				    
+					<md-input-container class="md-block md-input-has-placeholder" flex-gt-sm>
+ 					   <div editable-text="debtors.list[$index].reqLimit" e-ng-model="debtors.list[$index].reqLimit" e-name="reqLimit" e-required e-placeholder="Requested Limit">{{debtors.list[$index].reqLimit || 'Requested Limit'}}
+	      			  </div>					   
+					</md-input-container>				
+				</div>
+			    <div class="buttons">
+			    	 <div ng-show="editableForm.$visible">
+			        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting" >
+			          Save
+			        </button>
+			        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+			          Cancel
+			        </button>
+			      </div>
+			    </div>
+			    </form>			    
+		   </fieldset>
+		   <!--  <div style="padding-top: 2em;">
+	   	   	<button class="btn label label-info" ng-click="addNewChoice()">Add Buyer</button>
+	   	   </div>  -->
+		</div>		
+		<div id="choicesDisplay">
+			{{ debtors.list[0] }}
+		</div>
+</div>
+
